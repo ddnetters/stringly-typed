@@ -1,0 +1,37 @@
+name: '🌊 StringRay'
+description: 'Shine a light on your code''s communication - Sonar-powered string validation for quality gates'
+author: 'StringRay Team'
+inputs:
+  files:
+    description: 'Glob pattern for files to validate'
+    required: true
+    default: '**/*.{js,ts,md,json}'
+  checker:
+    description: 'Checker type to use (grammar, char_count, custom)'
+    required: true
+    default: 'grammar'
+  checker-options:
+    description: 'JSON string with checker options'
+    required: false
+    default: '{}'
+  decider:
+    description: 'Decider type to use (threshold, noCritical, custom)'
+    required: true
+    default: 'threshold'
+  decider-options:
+    description: 'JSON string with decider options'
+    required: false
+    default: '{}'
+outputs:
+  results:
+    description: 'JSON string with validation results'
+  summary:
+    description: 'JSON string with validation summary'
+  pass:
+    description: 'Boolean indicating if validation passed'
+runs:
+  using: 'node20'
+  main: 'dist/index.js'
+branding:
+  icon: 'search'
+  color: 'blue'

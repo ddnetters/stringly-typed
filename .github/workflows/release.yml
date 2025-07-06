@@ -1,0 +1,290 @@
+name: 🚀 Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  validate-release:
+    name: 🔍 Validate Release
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      is-prerelease: ${{ steps.version.outputs.is-prerelease }}
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run tests
+        run: npm test
+      
+      - name: Type check
+        run: npm run typecheck
+      
+      - name: Build action
+        run: npm run build
+      
+      - name: Extract version info
+        id: version
+        run: |
+          VERSION="${GITHUB_REF#refs/tags/}"
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+          
+          if [[ "$VERSION" =~ -.*$ ]]; then
+            echo "is-prerelease=true" >> $GITHUB_OUTPUT
+          else
+            echo "is-prerelease=false" >> $GITHUB_OUTPUT
+          fi
+          
+          echo "🏷️ Release version: $VERSION"
+
+  test-action:
+    name: 🧪 Test Built Action
+    needs: validate-release
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Install and build
+        run: |
+          npm ci
+          npm run build
+      
+      - name: 🔦 Test StringRay on itself
+        uses: ./
+        with:
+          files: 'src/**/*.ts'
+          checker: 'grammar'
+          decider: 'threshold'
+          decider-options: '{"minValidRatio": 0.8}'
+      
+      - name: Test with different configurations
+        uses: ./
+        with:
+          files: 'README.md'
+          checker: 'char_count'
+          checker-options: '{"maxChars": 1000}'
+          decider: 'threshold'
+          decider-options: '{"minValidRatio": 0.9}'
+
+  create-release:
+    name: 🏷️ Create GitHub Release
+    needs: [validate-release, test-action]
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Install and build
+        run: |
+          npm ci
+          npm run build
+      
+      - name: Generate release notes
+        id: release-notes
+        run: |
+          VERSION="${{ needs.validate-release.outputs.version }}"
+          
+          # Extract changelog section for this version or create basic notes
+          if grep -q "## \[${VERSION#v}" CHANGELOG.md 2>/dev/null; then
+            NOTES=$(sed -n "/## \[${VERSION#v}/,/## \[/p" CHANGELOG.md | head -n -1)
+          else
+            NOTES="## What's Changed
+
+See the full changelog for details of what's included in this release.
+
+## 🚀 Quick Start
+
+\`\`\`yaml
+- uses: ddnetters/stringray@$VERSION
+  with:
+    files: 'src/**/*.{js,ts,md}'
+    checker: 'grammar'
+    decider: 'threshold'
+\`\`\`"
+          fi
+          
+          # Write to file for upload
+          cat > release-notes.md << 'EOF'
+$NOTES
+EOF
+          
+          echo "Generated release notes for $VERSION"
+      
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ needs.validate-release.outputs.version }}
+          name: 🌊 StringRay ${{ needs.validate-release.outputs.version }}
+          body_path: release-notes.md
+          draft: false
+          prerelease: ${{ needs.validate-release.outputs.is-prerelease }}
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  publish-npm:
+    name: 📦 Publish to npm
+    needs: [validate-release, test-action]
+    runs-on: ubuntu-latest
+    if: ${{ needs.validate-release.outputs.is-prerelease == 'false' && secrets.NPM_TOKEN }}
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          registry-url: 'https://registry.npmjs.org'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Build for npm
+        run: npm run build
+      
+      - name: Update package.json for npm
+        run: |
+          # Update package.json for npm publishing
+          node -e "
+            const pkg = require('./package.json');
+            pkg.main = 'dist/index.js';
+            pkg.types = 'dist/index.d.ts';
+            pkg.files = ['dist', 'README.md', 'LICENSE', 'package.json'];
+            pkg.keywords = ['github-action', 'string-validation', 'code-quality', 'linting'];
+            pkg.repository = {
+              type: 'git',
+              url: 'https://github.com/ddnetters/stringray.git'
+            };
+            pkg.bugs = {
+              url: 'https://github.com/ddnetters/stringray/issues'
+            };
+            pkg.homepage = 'https://github.com/ddnetters/stringray#readme';
+            require('fs').writeFileSync('package.json', JSON.stringify(pkg, null, 2));
+          "
+      
+      - name: Publish to npm
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  update-major-tag:
+    name: 🔄 Update Major Version Tag
+    needs: [validate-release, create-release]
+    runs-on: ubuntu-latest
+    if: ${{ needs.validate-release.outputs.is-prerelease == 'false' }}
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Update major version tag
+        run: |
+          VERSION="${{ needs.validate-release.outputs.version }}"
+          MAJOR_VERSION=$(echo $VERSION | cut -d. -f1)
+          
+          echo "🏷️ Updating $MAJOR_VERSION to point to $VERSION"
+          
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # Delete existing major version tag (locally and remotely)
+          git tag -d $MAJOR_VERSION 2>/dev/null || true
+          git push origin :refs/tags/$MAJOR_VERSION 2>/dev/null || true
+          
+          # Create new major version tag
+          git tag $MAJOR_VERSION $VERSION
+          git push origin $MAJOR_VERSION
+          
+          echo "✅ Updated $MAJOR_VERSION tag to $VERSION"
+
+  post-release:
+    name: 📢 Post-Release Tasks
+    needs: [validate-release, create-release]
+    runs-on: ubuntu-latest
+    if: ${{ needs.validate-release.outputs.is-prerelease == 'false' }}
+    
+    steps:
+      - name: Create release discussion
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const version = "${{ needs.validate-release.outputs.version }}";
+            
+            try {
+              await github.rest.discussions.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                category_slug: "announcements",
+                title: `🌊 StringRay ${version} Released!`,
+                body: `
+            ## 🎉 StringRay ${version} is now available!
+
+            **Shine a light on your code's communication with this latest release.**
+
+            ### 🚀 Quick Start
+
+            \`\`\`yaml
+            - name: 🔦 Scan with StringRay
+              uses: ddnetters/stringray@${version}
+              with:
+                files: 'src/**/*.{js,ts,md}'
+                checker: 'grammar'
+                decider: 'threshold'
+            \`\`\`
+
+            ### 📋 What's New
+
+            See the [release notes](https://github.com/${context.repo.owner}/${context.repo.repo}/releases/tag/${version}) for full details.
+
+            ### 🤝 Feedback Welcome
+
+            Try out the new release and let us know what you think!
+
+            ---
+
+            **🔦 Happy string scanning! 🌊**
+                `
+              });
+              console.log("✅ Created release discussion");
+            } catch (error) {
+              console.log("ℹ️ Could not create discussion (may not be enabled):", error.message);
+            }
+      
+      - name: Update README badge (if exists)
+        run: |
+          echo "ℹ️ Consider updating any version badges in README.md to point to ${{ needs.validate-release.outputs.version }}"

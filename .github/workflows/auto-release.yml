@@ -1,0 +1,65 @@
+name: 🤖 Auto Release
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  auto-release:
+    name: 🚀 Create Auto Release
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run tests
+        run: npm test
+      
+      - name: Type check
+        run: npm run typecheck
+      
+      - name: Build action
+        run: npm run build
+      
+      - name: Semantic Release
+        uses: cycjimmy/semantic-release-action@v4
+        with:
+          semantic_version: 23
+          extra_plugins: |
+            @semantic-release/changelog
+            @semantic-release/git
+            conventional-changelog-conventionalcommits
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      
+      - name: Update major version tag
+        if: steps.semantic.outputs.new_release_published == 'true'
+        run: |
+          VERSION="${{ steps.semantic.outputs.new_release_version }}"
+          MAJOR_VERSION="v$(echo $VERSION | cut -d. -f1)"
+          
+          echo "🏷️ Updating $MAJOR_VERSION to point to v$VERSION"
+          
+          # Delete existing major version tag (locally and remotely)
+          git tag -d $MAJOR_VERSION 2>/dev/null || true
+          git push origin :refs/tags/$MAJOR_VERSION 2>/dev/null || true
+          
+          # Create new major version tag
+          git tag $MAJOR_VERSION v$VERSION
+          git push origin $MAJOR_VERSION
+          
+          echo "✅ Updated $MAJOR_VERSION tag to v$VERSION"

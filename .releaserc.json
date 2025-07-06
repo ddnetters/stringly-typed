@@ -1,0 +1,73 @@
+{
+  "branches": ["main"],
+  "plugins": [
+    [
+      "@semantic-release/commit-analyzer",
+      {
+        "preset": "conventionalcommits",
+        "releaseRules": [
+          {"type": "feat", "release": "minor"},
+          {"type": "fix", "release": "patch"},
+          {"type": "docs", "release": "patch"},
+          {"type": "style", "release": "patch"},
+          {"type": "refactor", "release": "patch"},
+          {"type": "test", "release": "patch"},
+          {"type": "chore", "release": "patch"},
+          {"type": "perf", "release": "patch"},
+          {"type": "ci", "release": "patch"},
+          {"type": "build", "release": "patch"},
+          {"type": "revert", "release": "patch"}
+        ]
+      }
+    ],
+    [
+      "@semantic-release/release-notes-generator",
+      {
+        "preset": "conventionalcommits",
+        "presetConfig": {
+          "types": [
+            {"type": "feat", "section": "✨ Features"},
+            {"type": "fix", "section": "🐛 Bug Fixes"},
+            {"type": "docs", "section": "📚 Documentation"},
+            {"type": "style", "section": "🎨 Styling"},
+            {"type": "refactor", "section": "♻️ Refactoring"},
+            {"type": "test", "section": "🧪 Tests"},
+            {"type": "chore", "section": "🔧 Maintenance"},
+            {"type": "perf", "section": "⚡ Performance"},
+            {"type": "ci", "section": "👷 CI/CD"},
+            {"type": "build", "section": "📦 Build"},
+            {"type": "revert", "section": "⏪ Reverts"}
+          ]
+        }
+      }
+    ],
+    [
+      "@semantic-release/changelog",
+      {
+        "changelogFile": "CHANGELOG.md",
+        "changelogTitle": "# 📊 Changelog\n\nAll notable changes to StringRay are automatically documented here.\n\nThis project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).\n\nReleases are automatically created when PRs with conventional commit titles are merged to main:\n- `feat:` → Minor version bump (new features)\n- `fix:` → Patch version bump (bug fixes) \n- `docs:`, `chore:`, `style:`, etc. → Patch version bump\n- `BREAKING CHANGE` or `!` → Major version bump\n"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "npmPublish": false
+      }
+    ],
+    [
+      "@semantic-release/github",
+      {
+        "releasedLabels": ["released"],
+        "releaseNameTemplate": "🌊 StringRay ${nextRelease.version}",
+        "releaseBodyTemplate": "## 🚀 Auto Release\n\n### 📋 What's Changed\n\n${nextRelease.notes}\n\n### 🔦 Quick Start\n\n```yaml\n- uses: ddnetters/stringray@${nextRelease.version}\n  with:\n    files: 'src/**/*.{js,ts,md}'\n    checker: 'grammar'\n    decider: 'threshold'\n```\n\n**Full Changelog**: https://github.com/ddnetters/stringray/compare/${lastRelease.gitTag}...${nextRelease.gitTag}"
+      }
+    ],
+    [
+      "@semantic-release/git",
+      {
+        "assets": ["package.json", "package-lock.json", "CHANGELOG.md"],
+        "message": "chore: release ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+      }
+    ]
+  ]
+}
