@@ -69,9 +69,10 @@ The release process is automated via GitHub Actions:
 ### What Happens
 1. **Validation**: Run full test suite and build
 2. **Action Test**: Test the built action on sample files
-3. **GitHub Release**: Create release with changelog
-4. **npm Publish**: Publish to npm registry (if configured)
-5. **Major Tag Update**: Update `v1` to point to `v1.2.3`
+3. **Publish Release Branch**: Push built code to `releases/v1` branch
+4. **GitHub Release**: Create release with changelog
+5. **npm Publish**: Publish to npm registry (if configured)
+6. **Major Tag Update**: Update `v1` to point to latest release
 
 ## 📦 npm Publishing (Optional)
 
@@ -194,24 +195,29 @@ Use this template for GitHub releases:
 **Full Changelog**: https://github.com/ddnetters/stringray/compare/vX.Y.Z-1...vX.Y.Z
 ```
 
-## 🎯 Version Tags
+## 🎯 Version Tags & Release Branches
 
-StringRay maintains these tags:
+StringRay uses a **release branch pattern** to keep the main branch clean. The compiled `dist/` folder is not committed to main - instead, it's published to release branches during the release process.
 
-- **Specific**: `v1.2.3` - Points to exact release
-- **Major**: `v1` - Points to latest `v1.x.x` release
-- **Latest**: `latest` - Points to most recent stable release
+### How It Works
+
+| Branch/Tag | Contains | Purpose |
+|------------|----------|---------|
+| `main` | Source code only | Development |
+| `releases/v1` | Built action (dist/) | Action distribution |
+| `v1` | Tag pointing to releases/v1 | User-facing version |
+| `v1.2.3` | Specific release tag | Pinned version |
 
 ### Usage Examples
 ```yaml
-# Pin to exact version (recommended for production)
-uses: ddnetters/stringray@v1.2.3
-
-# Use latest in major version (gets patches/features)
+# Use latest in major version (recommended)
 uses: ddnetters/stringray@v1
 
-# Use latest release (not recommended)
-uses: ddnetters/stringray@latest
+# Pin to exact version (for maximum stability)
+uses: ddnetters/stringray@v1.2.3
+
+# Reference release branch directly (alternative)
+uses: ddnetters/stringray@releases/v1
 ```
 
 ## 🚨 Release Rollback

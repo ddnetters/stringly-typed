@@ -86,9 +86,59 @@ jobs:
           decider: 'threshold'
           decider-options: '{"minValidRatio": 0.9}'
 
+  publish-release-branch:
+    name: 📦 Publish to Release Branch
+    needs: [validate-release, test-action]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install and build
+        run: |
+          npm ci
+          npm run build
+
+      - name: Publish to release branch
+        run: |
+          VERSION="${{ needs.validate-release.outputs.version }}"
+          MAJOR_VERSION=$(echo $VERSION | cut -d. -f1)
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Create a clean release branch with only what's needed
+          git checkout --orphan releases/$MAJOR_VERSION-temp
+
+          # Remove everything, then add back only what's needed for the action
+          git rm -rf .
+          git checkout HEAD -- action.yml package.json README.md LICENSE 2>/dev/null || true
+
+          # Add the built dist folder
+          git add -f dist/
+          git add action.yml package.json README.md LICENSE 2>/dev/null || true
+
+          git commit -m "Release $VERSION"
+
+          # Force push to the release branch
+          git branch -M releases/$MAJOR_VERSION
+          git push -f origin releases/$MAJOR_VERSION
+
+          echo "✅ Published to releases/$MAJOR_VERSION branch"
+
   create-release:
     name: 🏷️ Create GitHub Release
-    needs: [validate-release, test-action]
+    needs: [validate-release, test-action, publish-release-branch]
     runs-on: ubuntu-latest
     
     steps:

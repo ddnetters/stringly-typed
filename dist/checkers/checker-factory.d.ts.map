@@ -1,1 +1,0 @@
-{"version":3,"file":"checker-factory.d.ts","sourceRoot":"","sources":["../../src/checkers/checker-factory.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,OAAO,EAAE,MAAM,gBAAgB,CAAC;AAKzC,qBAAa,cAAc;IACzB,MAAM,CAAC,aAAa,CAAC,IAAI,EAAE,SAAS,GAAG,YAAY,GAAG,QAAQ,GAAG,OAAO;CAYzE"}

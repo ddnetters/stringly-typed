@@ -1,1 +1,0 @@
-{"version":3,"file":"no-critical-decider.d.ts","sourceRoot":"","sources":["../../src/deciders/no-critical-decider.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,OAAO,EAAE,MAAM,gBAAgB,CAAC;AACzC,OAAO,EAAE,gBAAgB,EAAE,iBAAiB,EAAE,MAAM,UAAU,CAAC;AAE/D,qBAAa,iBAAkB,YAAW,OAAO;IAC/C,MAAM,CAAC,OAAO,EAAE,gBAAgB,EAAE,EAAE,OAAO,CAAC,EAAE,MAAM,CAAC,MAAM,EAAE,GAAG,CAAC,GAAG,iBAAiB;CAetF"}

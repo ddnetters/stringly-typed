@@ -90,8 +90,8 @@ Detect potential security issues in string literals and prevent hardcoded secret
 
 ## Support
 
-- [GitHub Issues](https://github.com/ddnetters/string-validator-action/issues)
-- [Discussions](https://github.com/ddnetters/string-validator-action/discussions)
+- [GitHub Issues](https://github.com/ddnetters/stringray/issues)
+- [Discussions](https://github.com/ddnetters/stringray/discussions)
 - [Contributing Guide](../CONTRIBUTING.md)
 
 ## License

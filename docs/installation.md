@@ -24,7 +24,7 @@ jobs:
         uses: actions/checkout@v3
       
       - name: Validate strings
-        uses: ddnetters/string-validator-action@v1
+        uses: ddnetters/stringray@v1
         with:
           files: 'src/**/*.{js,ts,md}'
           checker: 'grammar'
@@ -36,13 +36,13 @@ jobs:
 For production use, pin to a specific version:
 
 ```yaml
-- uses: ddnetters/string-validator-action@v1.0.0
+- uses: ddnetters/stringray@v1.0.0
 ```
 
 Or use a commit SHA for maximum security:
 
 ```yaml
-- uses: ddnetters/string-validator-action@abc123def456
+- uses: ddnetters/stringray@v1
 ```
 
 ## Local Development
@@ -56,8 +56,8 @@ Or use a commit SHA for maximum security:
 
 ```bash
 # Clone the repository
-git clone https://github.com/ddnetters/string-validator-action.git
-cd string-validator-action
+git clone https://github.com/ddnetters/stringray.git
+cd stringray
 
 # Install dependencies
 npm install
@@ -141,7 +141,7 @@ jobs:
         with:
           node-version: '18'
       - name: Validate strings
-        uses: ddnetters/string-validator-action@v1
+        uses: ddnetters/stringray@v1
 ```
 
 ## Enterprise Setup

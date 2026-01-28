@@ -1,1 +1,0 @@
-{"version":3,"file":"custom-checker.d.ts","sourceRoot":"","sources":["../../src/checkers/custom-checker.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,OAAO,EAAE,MAAM,gBAAgB,CAAC;AACzC,OAAO,EAAE,WAAW,EAAE,MAAM,UAAU,CAAC;AAEvC,qBAAa,aAAc,YAAW,OAAO;IAC3C,KAAK,CAAC,OAAO,EAAE,MAAM,EAAE,OAAO,CAAC,EAAE,MAAM,CAAC,MAAM,EAAE,GAAG,CAAC,GAAG,WAAW;CA2BnE"}

@@ -32,7 +32,7 @@ assignees: ''
 
 ```yaml
 # Your StringRay configuration
-- uses: stringray@v1
+- uses: ddnetters/stringray@v1
   with:
     files: 'src/**/*.js'
     checker: 'grammar'

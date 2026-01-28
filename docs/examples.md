@@ -18,7 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Validate documentation
-        uses: ddnetters/string-validator-action@v1
+        uses: ddnetters/stringray@v1
         with:
           files: 'docs/**/*.md'
           checker: 'grammar'
@@ -39,7 +39,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Validate code strings
-        uses: ddnetters/string-validator-action@v1
+        uses: ddnetters/stringray@v1
         with:
           files: 'src/**/*.{js,ts,jsx,tsx}'
           checker: 'char_count'
@@ -86,7 +86,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Validate ${{ matrix.name }}
-        uses: ddnetters/string-validator-action@v1
+        uses: ddnetters/stringray@v1
         with:
           files: ${{ matrix.files }}
           checker: ${{ matrix.checker }}
@@ -109,7 +109,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Check for secrets
-        uses: ddnetters/string-validator-action@v1
+        uses: ddnetters/stringray@v1
         with:
           files: 'src/**/*.{js,ts,json}'
           checker: 'custom'
@@ -146,7 +146,7 @@ jobs:
             
       - name: Validate changed files
         if: steps.changed-files.outputs.any_changed == 'true'
-        uses: ddnetters/string-validator-action@v1
+        uses: ddnetters/stringray@v1
         with:
           files: ${{ steps.changed-files.outputs.all_changed_files }}
           checker: 'grammar'
@@ -172,7 +172,7 @@ jobs:
       
       # Validate component strings
       - name: Validate React components
-        uses: ddnetters/string-validator-action@v1
+        uses: ddnetters/stringray@v1
         with:
           files: 'src/components/**/*.{jsx,tsx}'
           checker: 'custom'
@@ -185,7 +185,7 @@ jobs:
           
       # Validate error messages
       - name: Validate error messages
-        uses: ddnetters/string-validator-action@v1
+        uses: ddnetters/stringray@v1
         with:
           files: 'src/utils/errors.js'
           checker: 'grammar'
@@ -193,7 +193,7 @@ jobs:
           
       # Check string lengths for UI
       - name: Check UI string lengths
-        uses: ddnetters/string-validator-action@v1
+        uses: ddnetters/stringray@v1
         with:
           files: 'src/**/*.{jsx,tsx}'
           checker: 'char_count'
@@ -221,7 +221,7 @@ jobs:
       
       # Validate main content
       - name: Validate documentation content
-        uses: ddnetters/string-validator-action@v1
+        uses: ddnetters/stringray@v1
         with:
           files: 'content/**/*.{md,mdx}'
           checker: 'grammar'
@@ -233,7 +233,7 @@ jobs:
             
       # Check heading lengths
       - name: Check heading lengths
-        uses: ddnetters/string-validator-action@v1
+        uses: ddnetters/stringray@v1
         with:
           files: 'content/**/*.md'
           checker: 'custom'
@@ -246,7 +246,7 @@ jobs:
           
       # Validate code examples
       - name: Validate code example comments
-        uses: ddnetters/string-validator-action@v1
+        uses: ddnetters/stringray@v1
         with:
           files: 'examples/**/*.js'
           checker: 'char_count'
@@ -270,7 +270,7 @@ jobs:
       - uses: actions/checkout@v3
       
       - name: Validate API descriptions
-        uses: ddnetters/string-validator-action@v1
+        uses: ddnetters/stringray@v1
         with:
           files: 'api/swagger.json'
           checker: 'custom'
@@ -290,7 +290,7 @@ Continue workflow even if validation fails:
 
 ```yaml
 - name: Validate strings (non-blocking)
-  uses: ddnetters/string-validator-action@v1
+  uses: ddnetters/stringray@v1
   continue-on-error: true
   with:
     files: 'src/**/*.js'
@@ -313,7 +313,7 @@ Report validation results to external systems:
 ```yaml
 - name: Validate strings
   id: validate
-  uses: ddnetters/string-validator-action@v1
+  uses: ddnetters/stringray@v1
   with:
     files: 'src/**/*.js'
     checker: 'grammar'
@@ -366,7 +366,7 @@ jobs:
           
       - name: Validate chunk ${{ matrix.chunk }}
         if: steps.files.outputs.files != ''
-        uses: ddnetters/string-validator-action@v1
+        uses: ddnetters/stringray@v1
         with:
           files: ${{ steps.files.outputs.files }}
           checker: 'grammar'
@@ -386,7 +386,7 @@ Validate only new or modified strings:
     key: string-validation-${{ hashFiles('src/**/*.js') }}
     
 - name: Incremental validation
-  uses: ddnetters/string-validator-action@v1
+  uses: ddnetters/stringray@v1
   with:
     files: 'src/**/*.js'
     checker: 'grammar'

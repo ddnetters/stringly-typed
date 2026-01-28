@@ -5,7 +5,8 @@ yarn-debug.log*
 yarn-error.log*
 
 # Build outputs
-# Note: dist/ is NOT ignored - GitHub Actions requires compiled JS to be committed
+# dist/ is published to releases/v1 branch by the release workflow
+dist/
 lib/
 *.tgz
 

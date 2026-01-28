@@ -1,1 +1,0 @@
-{"version":3,"file":"base-checker.d.ts","sourceRoot":"","sources":["../../src/checkers/base-checker.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,WAAW,EAAE,MAAM,UAAU,CAAC;AAEvC,MAAM,WAAW,OAAO;IACtB,KAAK,CAAC,OAAO,EAAE,MAAM,EAAE,OAAO,CAAC,EAAE,MAAM,CAAC,MAAM,EAAE,GAAG,CAAC,GAAG,WAAW,CAAC;CACpE"}
