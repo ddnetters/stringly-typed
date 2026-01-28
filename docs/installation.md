@@ -27,7 +27,7 @@ jobs:
         uses: ddnetters/stringray@v1
         with:
           files: 'src/**/*.{js,ts,md}'
-          checker: 'grammar'
+          checker: 'char_count'
           decider: 'threshold'
 ```
 
@@ -100,7 +100,7 @@ const result = validateCodebaseStrings({
   files: [
     { path: 'src/app.js', content: 'const msg = "Hello world";' }
   ],
-  checker: 'grammar',
+  checker: 'char_count',
   decider: 'threshold'
 });
 
@@ -118,7 +118,7 @@ docker build -t string-validator .
 # Run validation
 docker run --rm -v $(pwd):/workspace string-validator \
   --files "src/**/*.js" \
-  --checker grammar \
+  --checker char_count \
   --decider threshold
 ```
 

@@ -6,7 +6,7 @@
 
 | Input | Description | Default |
 |-------|-------------|---------|
-| `checker` | Validation checker type | `grammar` |
+| `checker` | Validation checker type | `char_count` |
 | `decider` | Decision logic type | `threshold` |
 
 ### Optional Inputs
@@ -51,19 +51,6 @@ files: '**/*.js,!node_modules/**,!dist/**'
 | `README*` | README files | Content text |
 
 ## Checker Configuration
-
-### Grammar Checker
-
-```yaml
-checker: 'grammar'
-checker-options: '{}'  # No options needed
-```
-
-**Built-in Rules:**
-- Capitalization at sentence start
-- No double spaces
-- Word length limits (15 characters)
-- Critical spelling errors: `teh`, `recieve`, `seperate`, `definately`
 
 ### Character Count Checker
 
@@ -157,7 +144,7 @@ decider-options: |
   uses: ddnetters/string-validator-action@v1
   with:
     files: 'docs/**/*.md'
-    checker: 'grammar'
+    checker: 'char_count'
     decider: 'noCritical'
 ```
 
@@ -213,7 +200,7 @@ env:
   uses: ddnetters/string-validator-action@v1
   with:
     files: 'src/**/*.js'
-    checker: 'grammar'
+    checker: 'char_count'
     decider: 'threshold'
 
 - name: Process results
@@ -241,7 +228,7 @@ strategy:
   matrix:
     config:
       - files: 'src/**/*.js'
-        checker: 'grammar'
+        checker: 'char_count'
       - files: 'docs/**/*.md' 
         checker: 'char_count'
         options: '{"maxChars": 200}'
@@ -262,7 +249,7 @@ steps:
   uses: ddnetters/string-validator-action@v1
   with:
     files: 'src/**/*.{js,ts}'
-    checker: 'grammar'
+    checker: 'char_count'
     decider: 'threshold'
 ```
 

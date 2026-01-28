@@ -7,9 +7,9 @@ inputs:
     required: true
     default: '**/*.{js,ts,md,json}'
   checker:
-    description: 'Checker type to use (grammar, char_count, custom, brand_style)'
+    description: 'Checker type to use (char_count, custom, brand_style)'
     required: true
-    default: 'grammar'
+    default: 'char_count'
   checker-options:
     description: 'JSON string with checker options'
     required: false

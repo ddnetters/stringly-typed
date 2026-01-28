@@ -1,55 +1,4 @@
-import { GrammarChecker, CharCountChecker, CustomChecker, CheckerFactory, BrandStyleChecker } from '../../checkers';
-
-describe('GrammarChecker', () => {
-  let checker: GrammarChecker;
-
-  beforeEach(() => {
-    checker = new GrammarChecker();
-  });
-
-  it('should pass for properly formatted text', () => {
-    const result = checker.check('This is a proper sentence.');
-    expect(result.valid).toBe(true);
-    expect(result.message).toBe('OK');
-  });
-
-  it('should fail for text not starting with capital', () => {
-    const result = checker.check('this is not capitalized');
-    expect(result.valid).toBe(false);
-    expect(result.message).toContain('should start with capital letter');
-  });
-
-  it('should fail for text with double spaces', () => {
-    const result = checker.check('Text with  double spaces');
-    expect(result.valid).toBe(false);
-    expect(result.message).toContain('contains double spaces');
-  });
-
-  it('should fail for text with very long words', () => {
-    const result = checker.check('This has a supercalifragilisticexpialidocious word');
-    expect(result.valid).toBe(false);
-    expect(result.message).toContain('contains very long words');
-  });
-
-  it('should flag critical spelling errors', () => {
-    const result = checker.check('This has a teh spelling error');
-    expect(result.valid).toBe(false);
-    expect(result.message).toContain('CRITICAL spelling error detected');
-  });
-
-  it('should pass for short strings', () => {
-    const result = checker.check('Hi');
-    expect(result.valid).toBe(true);
-  });
-
-  it('should combine multiple issues', () => {
-    const result = checker.check('text with  double spaces and teh error');
-    expect(result.valid).toBe(false);
-    expect(result.message).toContain('should start with capital letter');
-    expect(result.message).toContain('contains double spaces');
-    expect(result.message).toContain('CRITICAL spelling error detected');
-  });
-});
+import { CharCountChecker, CustomChecker, CheckerFactory, BrandStyleChecker } from '../../checkers';
 
 describe('CharCountChecker', () => {
   let checker: CharCountChecker;
@@ -131,11 +80,6 @@ describe('CustomChecker', () => {
 });
 
 describe('CheckerFactory', () => {
-  it('should create GrammarChecker', () => {
-    const checker = CheckerFactory.createChecker('grammar');
-    expect(checker).toBeInstanceOf(GrammarChecker);
-  });
-
   it('should create CharCountChecker', () => {
     const checker = CheckerFactory.createChecker('char_count');
     expect(checker).toBeInstanceOf(CharCountChecker);

@@ -2,94 +2,6 @@
 
 Checkers are responsible for validating individual strings extracted from your codebase. Each checker implements specific validation rules and returns a result indicating whether the string is valid.
 
-## Grammar Checker
-
-The grammar checker validates basic grammar and spelling rules.
-
-### Usage
-
-```yaml
-checker: 'grammar'
-checker-options: '{}'  # No configuration needed
-```
-
-### Validation Rules
-
-#### ✅ **Capitalization**
-Strings should start with a capital letter:
-
-```javascript
-// ✅ Valid
-"Hello world"
-"This is correct"
-
-// ❌ Invalid
-"hello world"     // Missing capital
-"this is wrong"   // Missing capital
-```
-
-#### ✅ **Spacing**
-No double spaces allowed:
-
-```javascript
-// ✅ Valid
-"Proper spacing here"
-"One space between words"
-
-// ❌ Invalid
-"Double  spaces"      // Contains double space
-"Multiple   spaces"   // Contains multiple spaces
-```
-
-#### ✅ **Word Length**
-Words longer than 15 characters trigger warnings:
-
-```javascript
-// ✅ Valid
-"Normal length words"
-"Acceptable text"
-
-// ❌ Invalid
-"Supercalifragilisticexpialidocious"  // Too long
-"Antidisestablishmentarianism"        // Too long
-```
-
-#### 🚨 **Critical Spelling Errors**
-Specific misspellings trigger critical failures:
-
-- `teh` → should be "the"
-- `recieve` → should be "receive" 
-- `seperate` → should be "separate"
-- `definately` → should be "definitely"
-
-```javascript
-// 🚨 Critical Errors
-"I recieve the message"     // CRITICAL: recieve
-"We need to seperate this"  // CRITICAL: seperate
-"This is definately wrong"  // CRITICAL: definately
-"Fix teh issue"            // CRITICAL: teh
-```
-
-### Return Values
-
-```typescript
-interface CheckResult {
-  valid: boolean;
-  message: string;
-}
-
-// Examples:
-{ valid: true, message: "OK" }
-{ valid: false, message: "should start with capital letter" }
-{ valid: false, message: "contains double spaces, CRITICAL spelling error detected" }
-```
-
-### Special Cases
-
-- Strings shorter than 3 characters always pass
-- Multiple issues are combined in the message
-- Critical errors take precedence in messaging
-
 ## Character Count Checker
 
 Validates string length against a maximum character limit.
@@ -367,8 +279,8 @@ Create checkers programmatically:
 ```typescript
 import { CheckerFactory } from './checkers';
 
-const grammarChecker = CheckerFactory.createChecker('grammar');
-const result = grammarChecker.check('Hello world');
+const charCountChecker = CheckerFactory.createChecker('char_count');
+const result = charCountChecker.check('Hello world', { maxChars: 50 });
 
 // For async checkers like brand_style
 const brandChecker = CheckerFactory.createChecker('brand_style');
@@ -378,11 +290,6 @@ const asyncResult = await brandChecker.check('The user clicked the button', {
 ```
 
 ## Best Practices
-
-### Grammar Checker
-- Use for documentation and user-facing strings
-- Combine with `noCritical` decider to fail on spelling errors
-- Consider case-sensitivity of your content
 
 ### Character Count Checker  
 - Set reasonable limits based on your UI constraints
@@ -396,9 +303,9 @@ const asyncResult = await brandChecker.check('The user clicked the button', {
 - Avoid external dependencies in logic expressions
 
 ### Performance Tips
-- Grammar checker is fastest for simple validation
 - Character count checker is most efficient for length checks
 - Custom checker has overhead - use sparingly for complex rules
+- Brand style checker requires API calls - enable caching for efficiency
 
 ## Next Steps
 

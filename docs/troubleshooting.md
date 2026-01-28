@@ -63,7 +63,7 @@ Error: Input required and not supplied: checker
    ```yaml
    with:
      files: 'src/**/*.js'
-     checker: 'grammar'      # Required
+     checker: 'char_count'      # Required
      decider: 'threshold'    # Required
    ```
 
@@ -278,7 +278,7 @@ Error: EACCES: permission denied, open '/path/to/file'
   uses: ddnetters/string-validator-action@v1
   with:
     files: 'src/**/*.js'
-    checker: 'grammar'
+    checker: 'char_count'
     decider: 'threshold'
   env:
     ACTIONS_STEP_DEBUG: true  # Enable debug logging
@@ -292,7 +292,7 @@ Error: EACCES: permission denied, open '/path/to/file'
   uses: ddnetters/string-validator-action@v1
   with:
     files: 'src/**/*.js'
-    checker: 'grammar'
+    checker: 'char_count'
     decider: 'threshold'
     
 - name: Debug outputs
@@ -339,7 +339,7 @@ jobs:
         uses: ddnetters/string-validator-action@v1
         with:
           files: 'test.js'
-          checker: 'grammar'
+          checker: 'char_count'
           decider: 'threshold'
 ```
 
@@ -354,7 +354,7 @@ jobs:
   uses: ddnetters/string-validator-action@v1
   with:
     files: 'src/**/*.js'
-    checker: 'grammar'
+    checker: 'char_count'
     decider: 'noCritical'
     
 - name: Fallback to lenient validation
@@ -362,7 +362,7 @@ jobs:
   uses: ddnetters/string-validator-action@v1
   with:
     files: 'src/**/*.js'
-    checker: 'grammar'
+    checker: 'char_count'
     decider: 'threshold'
     decider-options: '{"minValidRatio": 0.5}'
 ```
@@ -384,7 +384,7 @@ jobs:
   uses: ddnetters/string-validator-action@v1
   with:
     files: 'src/**/*.js'
-    checker: 'grammar'
+    checker: 'char_count'
     decider: 'threshold'
 ```
 

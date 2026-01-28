@@ -29,7 +29,7 @@ const result = validateCodebaseStrings({
   files: [
     { path: 'src/app.js', content: 'const msg = "Hello world";' }
   ],
-  checker: 'grammar',
+  checker: 'char_count',
   decider: 'threshold',
   deciderOptions: { minValidRatio: 0.8 }
 });
@@ -86,7 +86,7 @@ Configuration object for the validation process.
 ```typescript
 interface ValidatorInput {
   files: { path: string; content: string }[];
-  checker: "grammar" | "char_count" | "custom" | "brand_style";
+  checker: "char_count" | "custom" | "brand_style";
   checkerOptions?: Record<string, any>;
   decider: "threshold" | "noCritical" | "custom";
   deciderOptions?: Record<string, any>;
@@ -320,7 +320,7 @@ Factory class for creating checker instances.
 
 ```typescript
 class CheckerFactory {
-  static createChecker(type: "grammar" | "char_count" | "custom" | "brand_style"): Checker | AsyncChecker
+  static createChecker(type: "char_count" | "custom" | "brand_style"): Checker | AsyncChecker
 }
 ```
 
@@ -338,22 +338,6 @@ Creates a checker instance of the specified type.
 
 **Throws:**
 - `Error`: If unknown checker type is provided
-
-### `GrammarChecker`
-
-Validates basic grammar rules.
-
-```typescript
-class GrammarChecker implements Checker {
-  check(content: string, options?: Record<string, any>): CheckResult
-}
-```
-
-**Validation Rules:**
-- Capitalization at start
-- No double spaces  
-- Word length limits
-- Critical spelling error detection
 
 ### `CharCountChecker`
 
@@ -511,7 +495,7 @@ try {
 
 | Error | Cause | Solution |
 |-------|-------|----------|
-| `Unknown checker type` | Invalid checker type | Use 'grammar', 'char_count', or 'custom' |
+| `Unknown checker type` | Invalid checker type | Use 'char_count', 'custom', or 'brand_style' |
 | `Unknown decider type` | Invalid decider type | Use 'threshold', 'noCritical', or 'custom' |
 | `Custom logic error` | Invalid JavaScript in custom logic | Fix JavaScript syntax |
 | `No custom logic provided` | Missing logic in custom checker/decider | Provide valid logic string |
@@ -527,7 +511,7 @@ const result = validateCodebaseStrings({
   files: [
     { path: 'src/app.js', content: 'const msg = "Hello world";' }
   ],
-  checker: 'grammar',
+  checker: 'char_count',
   decider: 'threshold'
 });
 ```
@@ -568,7 +552,7 @@ function validateProject(projectFiles: string[]): ValidatorOutput {
       path,
       content: fs.readFileSync(path, 'utf8')
     })),
-    checker: 'grammar',
+    checker: 'char_count',
     decider: 'threshold',
     deciderOptions: { minValidRatio: 0.8 }
   };
@@ -591,12 +575,12 @@ function validateProject(projectFiles: string[]): ValidatorOutput {
 
 ```typescript
 // Old API (0.x)
-validateStrings(files, 'grammar', { threshold: 0.8 });
+validateStrings(files, 'char_count', { threshold: 0.8 });
 
 // New API (1.x)  
 validateCodebaseStrings({
   files,
-  checker: 'grammar',
+  checker: 'char_count',
   decider: 'threshold',
   deciderOptions: { minValidRatio: 0.8 }
 });

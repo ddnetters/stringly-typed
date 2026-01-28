@@ -73,7 +73,7 @@ jobs:
         uses: ./
         with:
           files: 'src/**/*.ts'
-          checker: 'grammar'
+          checker: 'char_count'
           decider: 'threshold'
           decider-options: '{"minValidRatio": 0.8}'
       
@@ -177,7 +177,7 @@ See the full changelog for details of what's included in this release.
 - uses: ddnetters/stringray@\$VERSION
   with:
     files: 'src/**/*.{js,ts,md}'
-    checker: 'grammar'
+    checker: 'char_count'
     decider: 'threshold'
 \`\`\`"
           fi
@@ -313,7 +313,7 @@ EOF
               uses: ddnetters/stringray@${version}
               with:
                 files: 'src/**/*.{js,ts,md}'
-                checker: 'grammar'
+                checker: 'char_count'
                 decider: 'threshold'
             \`\`\`
 

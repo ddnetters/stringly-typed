@@ -15,12 +15,12 @@ import { initChatModel } from 'langchain/chat_models/universal';
 const mockInitChatModel = initChatModel as jest.MockedFunction<typeof initChatModel>;
 
 describe('validateCodebaseStrings', () => {
-  it('should validate using grammar checker and threshold decider', () => {
+  it('should validate using char_count checker and threshold decider', () => {
     const input: ValidatorInput = {
       files: [
         { path: 'test.js', content: 'const msg = "Hello world";' }
       ],
-      checker: 'grammar',
+      checker: 'char_count',
       decider: 'threshold'
     };
 
@@ -32,7 +32,7 @@ describe('validateCodebaseStrings', () => {
     expect(result.summary.pass).toBe(true);
   });
 
-  it('should validate using char_count checker', () => {
+  it('should validate using char_count checker with custom options', () => {
     const input: ValidatorInput = {
       files: [
         { path: 'test.js', content: 'const msg = "Very long message that exceeds character limit";' }
@@ -53,9 +53,10 @@ describe('validateCodebaseStrings', () => {
   it('should validate using noCritical decider', () => {
     const input: ValidatorInput = {
       files: [
-        { path: 'test.js', content: 'const msg = "Text with teh error";' }
+        { path: 'test.js', content: 'const msg = "This is a very long string that exceeds the character limit";' }
       ],
-      checker: 'grammar',
+      checker: 'char_count',
+      checkerOptions: { maxChars: 20 },
       decider: 'noCritical'
     };
 
@@ -63,9 +64,7 @@ describe('validateCodebaseStrings', () => {
 
     expect(result.results).toHaveLength(1);
     expect(result.results[0].valid).toBe(false);
-    expect(result.results[0].message).toContain('CRITICAL');
-    expect(result.summary.pass).toBe(false);
-    expect(result.summary.reason).toContain('Found 1 critical issue(s)');
+    expect(result.summary.pass).toBe(true); // noCritical only fails on CRITICAL messages
   });
 
   it('should validate using custom checker', () => {
@@ -90,7 +89,7 @@ describe('validateCodebaseStrings', () => {
       files: [
         { path: 'test.js', content: 'const msg = "Test message";' }
       ],
-      checker: 'grammar',
+      checker: 'char_count',
       decider: 'custom',
       deciderOptions: { logic: 'results.every(r => r.valid)' }
     };
@@ -104,10 +103,11 @@ describe('validateCodebaseStrings', () => {
   it('should handle multiple files with mixed results', () => {
     const input: ValidatorInput = {
       files: [
-        { path: 'good.js', content: 'const msg = "Good message";' },
-        { path: 'bad.js', content: 'const msg = "bad message";' }
+        { path: 'good.js', content: 'const msg = "Short";' },
+        { path: 'bad.js', content: 'const msg = "This is a very long message that exceeds the limit";' }
       ],
-      checker: 'grammar',
+      checker: 'char_count',
+      checkerOptions: { maxChars: 20 },
       decider: 'threshold',
       deciderOptions: { minValidRatio: 0.4 }
     };
@@ -123,7 +123,7 @@ describe('validateCodebaseStrings', () => {
   it('should handle empty files array', () => {
     const input: ValidatorInput = {
       files: [],
-      checker: 'grammar',
+      checker: 'char_count',
       decider: 'threshold'
     };
 
@@ -138,7 +138,7 @@ describe('validateCodebaseStrings', () => {
       files: [
         { path: 'README.md', content: '# Title\n\nThis is documentation content.' }
       ],
-      checker: 'grammar',
+      checker: 'char_count',
       decider: 'threshold'
     };
 
@@ -153,7 +153,7 @@ describe('validateCodebaseStrings', () => {
       files: [
         { path: 'test.js', content: 'const msg = "Hello world";' }
       ],
-      checker: 'grammar',
+      checker: 'char_count',
       decider: 'threshold'
     };
 
@@ -173,22 +173,24 @@ describe('validateCodebaseStrings', () => {
   it('should handle complex validation scenarios', () => {
     const input: ValidatorInput = {
       files: [
-        { 
-          path: 'complex.js', 
-          content: 'const a = "Good text";\nconst b = "bad text";\nconst c = "Text with teh error";' 
+        {
+          path: 'complex.js',
+          content: 'const a = "Short";\nconst b = "Medium length";\nconst c = "This is a very long string that exceeds the limit";'
         }
       ],
-      checker: 'grammar',
-      decider: 'noCritical'
+      checker: 'char_count',
+      checkerOptions: { maxChars: 20 },
+      decider: 'threshold',
+      deciderOptions: { minValidRatio: 0.5 }
     };
 
     const result = validateCodebaseStrings(input);
 
     expect(result.results).toHaveLength(3);
     expect(result.results[0].valid).toBe(true);
-    expect(result.results[1].valid).toBe(false);
+    expect(result.results[1].valid).toBe(true);
     expect(result.results[2].valid).toBe(false);
-    expect(result.summary.pass).toBe(false);
+    expect(result.summary.pass).toBe(true);
   });
 });
 
@@ -202,7 +204,7 @@ describe('validateCodebaseStringsAsync', () => {
       files: [
         { path: 'test.js', content: 'const msg = "Hello world";' }
       ],
-      checker: 'grammar',
+      checker: 'char_count',
       decider: 'threshold'
     };
 

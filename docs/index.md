@@ -24,7 +24,7 @@ jobs:
         uses: ddnetters/stringray@v1
         with:
           files: 'src/**/*.{js,ts,md}'
-          checker: 'grammar'
+          checker: 'char_count'
           decider: 'threshold'
           decider-options: '{"minValidRatio": 0.8}'
 ```
@@ -45,9 +45,9 @@ Extracts string literals and content from:
 
 ### Stage 2: Validation (Checkers)
 Validates extracted strings using:
-- **Grammar Checker**: Basic grammar and spelling rules
 - **Character Count Checker**: Length limitations
 - **Custom Checker**: User-defined JavaScript logic
+- **Brand Style Checker**: AI-powered brand voice validation
 
 ### Stage 3: Decision (Deciders)
 Makes pass/fail decisions based on:
@@ -77,10 +77,10 @@ Makes pass/fail decisions based on:
 ## Use Cases
 
 ### Code Quality
-Ensure consistent string formatting, capitalization, and grammar across your codebase.
+Ensure consistent string formatting and length limits across your codebase.
 
 ### Documentation Validation
-Validate markdown documentation for grammar, spelling, and consistency.
+Validate markdown documentation for length limits and brand style consistency.
 
 ### Internationalization
 Check string patterns for i18n compliance and character encoding issues.

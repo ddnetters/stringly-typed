@@ -292,7 +292,7 @@ Use multiple steps for complex decision logic:
   uses: ddnetters/string-validator-action@v1
   with:
     files: 'src/**/*.js'
-    checker: 'grammar'
+    checker: 'char_count'
     decider: 'noCritical'
 
 # Step 2: Check threshold if no critical issues
@@ -301,7 +301,7 @@ Use multiple steps for complex decision logic:
   uses: ddnetters/string-validator-action@v1
   with:
     files: 'src/**/*.js'
-    checker: 'grammar'  
+    checker: 'char_count'  
     decider: 'threshold'
     decider-options: '{"minValidRatio": 0.95}'
 ```

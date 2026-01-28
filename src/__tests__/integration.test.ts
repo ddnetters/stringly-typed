@@ -11,7 +11,7 @@ describe('Integration Tests', () => {
             function greet(name) {
               return "Hello, " + name + "!";
             }
-            
+
             const ERROR_MSG = "Something went wrong";
             const DEBUG_MSG = "Debug: processing user input";
           `
@@ -25,7 +25,7 @@ describe('Integration Tests', () => {
           `
         }
       ],
-      checker: 'grammar',
+      checker: 'char_count',
       decider: 'threshold',
       deciderOptions: { minValidRatio: 0.8 }
     };
@@ -34,7 +34,7 @@ describe('Integration Tests', () => {
 
     expect(result.results.length).toBeGreaterThan(0);
     expect(result.summary.pass).toBe(true);
-    
+
     const stringContents = result.results.map(r => r.content);
     expect(stringContents).toContain('Hello, ');
     expect(stringContents).toContain('Something went wrong');
@@ -80,26 +80,27 @@ npm start
     expect(result.summary.pass).toBe(true);
   });
 
-  it('should catch critical issues in codebase', () => {
+  it('should catch length issues in codebase', () => {
     const input: ValidatorInput = {
       files: [
         {
           path: 'src/messages.js',
           content: `
-            const SUCCESS_MSG = "Operation completed successfully";
-            const ERROR_MSG = "An error with teh processing";
-            const WARNING_MSG = "This is a warning with recieve";
+            const SUCCESS_MSG = "OK";
+            const ERROR_MSG = "This is a very long error message that exceeds the character limit";
+            const WARNING_MSG = "This warning message is also quite long and exceeds limits";
           `
         }
       ],
-      checker: 'grammar',
-      decider: 'noCritical'
+      checker: 'char_count',
+      checkerOptions: { maxChars: 30 },
+      decider: 'threshold',
+      deciderOptions: { minValidRatio: 0.9 }
     };
 
     const result = validateCodebaseStrings(input);
 
     expect(result.summary.pass).toBe(false);
-    expect(result.summary.reason).toContain('critical issue');
   });
 
   it('should handle mixed file types with custom validation', () => {
@@ -148,7 +149,7 @@ npm start
           content: 'const weird = "unclosed string\nconst normal = "proper string";'
         }
       ],
-      checker: 'grammar',
+      checker: 'char_count',
       decider: 'threshold'
     };
 
@@ -192,19 +193,19 @@ npm start
               name: string;
               email: string;
             }
-            
+
             const DEFAULT_USER: User = {
               name: "Anonymous User",
               email: "anonymous@example.com"
             };
-            
+
             function validateUser(user: User): string {
               return user.name ? "Valid user" : "Invalid user data";
             }
           `
         }
       ],
-      checker: 'grammar',
+      checker: 'char_count',
       decider: 'threshold'
     };
 

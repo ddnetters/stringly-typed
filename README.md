@@ -2,7 +2,7 @@
 
 > **Shine a light on your code's communication.**
 
-StringRay is a GitHub Action that swims through your codebase, finds every string message, and illuminates their quality with sonar-like precision. Whether checking grammar, length limits, or detecting critical alerts, StringRay ensures your code speaks clearly and passes your CI gates.
+StringRay is a GitHub Action that swims through your codebase, finds every string message, and illuminates their quality with sonar-like precision. Whether checking length limits, brand style compliance, or detecting critical alerts, StringRay ensures your code speaks clearly and passes your CI gates.
 
 ```
 🔦 StringRay Scanning...
@@ -16,7 +16,7 @@ StringRay is a GitHub Action that swims through your codebase, finds every strin
 
 ## 🪼 Overview
 
-StringRay navigates through JavaScript, TypeScript, Markdown, and JSON files to extract and validate string content. Using configurable checkers (grammar, length, custom logic) and flexible deciders (threshold, critical detection, custom rules), it provides automated quality gates for your development workflow.
+StringRay navigates through JavaScript, TypeScript, Markdown, and JSON files to extract and validate string content. Using configurable checkers (length, brand style, custom logic) and flexible deciders (threshold, critical detection, custom rules), it provides automated quality gates for your development workflow.
 
 Perfect for maintaining consistent messaging, catching spelling errors, enforcing UX guidelines, and ensuring internationalization readiness.
 
@@ -30,8 +30,8 @@ StringRay operates through a **three-stage sonar pipeline**:
 🌊 Stage 1: String Extraction
    └── Scans files and extracts string literals + content
 
-🔍 Stage 2: Quality Scanning (Checkers)  
-   └── Validates each string using grammar/length/custom rules
+🔍 Stage 2: Quality Scanning (Checkers)
+   └── Validates each string using length/brand style/custom rules
 
 🎯 Stage 3: Decision Sonar (Deciders)
    └── Determines pass/fail based on threshold/critical/custom logic
@@ -43,11 +43,6 @@ Each stage is modular and extensible, allowing you to customize validation rules
 
 ## 🧪 Supported Checkers
 
-### 🔤 **Grammar Checker**
-- Validates capitalization and spacing
-- Detects critical spelling errors (`teh`, `recieve`, etc.)
-- Checks word length limits
-
 ### 📏 **Character Count Checker**
 - Enforces maximum string length
 - Configurable limits per file type
@@ -58,6 +53,11 @@ Each stage is modular and extensible, allowing you to customize validation rules
 - Access to full string content
 - Unlimited customization possibilities
 
+### 🎨 **Brand Style Checker**
+- AI-powered brand voice validation
+- Style guide compliance checking
+- Consistent terminology enforcement
+
 ---
 
 ## 🧠 Example: Catching Critical Issues
@@ -65,23 +65,23 @@ Each stage is modular and extensible, allowing you to customize validation rules
 ### Input Code:
 ```javascript
 // src/messages.js
-const ERROR_MSG = "An error occured while processing";
-const SUCCESS_MSG = "Operation completed successfully";
-const WARNING_MSG = "Please check teh configuration";
+const ERROR_MSG = "An error occurred while processing your request. Please contact support.";
+const SUCCESS_MSG = "Done";
+const WARNING_MSG = "Please check your configuration settings before proceeding";
 ```
 
-### StringRay Output:
+### StringRay Output (with char_count checker, maxChars: 50):
 ```yaml
 🔦 StringRay Results:
 📄 src/messages.js:
-  ├── Line 1: "An error occured while processing" ❌ 
-  │   └── should start with capital letter
-  ├── Line 2: "Operation completed successfully" ✅
-  │   └── OK  
-  └── Line 3: "Please check teh configuration" ❌
-      └── CRITICAL spelling error detected
+  ├── Line 1: "An error occurred while processing..." ❌
+  │   └── Too long: 75 characters (max: 50)
+  ├── Line 2: "Done" ✅
+  │   └── OK
+  └── Line 3: "Please check your configuration..." ❌
+      └── Too long: 58 characters (max: 50)
 
-🎯 Decision: FAILED - Found 1 critical issue(s)
+🎯 Decision: FAILED - 1/3 strings valid (33%)
 ```
 
 ---
@@ -103,8 +103,8 @@ jobs:
         uses: ddnetters/stringray@v1
         with:
           files: 'src/**/*.{js,ts,jsx,tsx,md}'
-          checker: 'grammar'
-          decider: 'noCritical'
+          checker: 'char_count'
+          decider: 'threshold'
 ```
 
 ### Advanced Configuration:
@@ -131,7 +131,7 @@ jobs:
 | 🎛️ Input | Description | Default |
 |----------|-------------|---------|
 | `files` | Glob pattern for target files | `**/*.{js,ts,md,json}` |
-| `checker` | Validation type: `grammar` `char_count` `custom` | `grammar` |
+| `checker` | Validation type: `char_count` `custom` `brand_style` | `char_count` |
 | `checker-options` | JSON configuration for checker | `{}` |
 | `decider` | Decision logic: `threshold` `noCritical` `custom` | `threshold` |
 | `decider-options` | JSON configuration for decider | `{}` |
@@ -164,7 +164,7 @@ import { validateCodebaseStrings } from 'stringray';
 
 const result = validateCodebaseStrings({
   files: [{ path: 'app.js', content: 'const msg = "Hello world";' }],
-  checker: 'grammar',
+  checker: 'char_count',
   decider: 'threshold',
   deciderOptions: { minValidRatio: 0.8 }
 });
@@ -213,7 +213,7 @@ console.log(`🎯 Result: ${result.summary.pass ? '✅ PASS' : '❌ FAIL'}`);
 ```typescript
 function validateCodebaseStrings(input: {
   files: { path: string; content: string }[];
-  checker: "grammar" | "char_count" | "custom";
+  checker: "char_count" | "custom" | "brand_style";
   checkerOptions?: Record<string, any>;
   decider: "threshold" | "noCritical" | "custom";
   deciderOptions?: Record<string, any>;
@@ -252,7 +252,7 @@ npm run typecheck
 
 - 🏠 [**Getting Started**](docs/index.md) - Overview and quick start
 - ⚙️ [**Configuration Guide**](docs/configuration.md) - Detailed setup options
-- 🔍 [**Checkers Reference**](docs/checkers.md) - Grammar, length, and custom validation
+- 🔍 [**Checkers Reference**](docs/checkers.md) - Length, brand style, and custom validation
 - 🎯 [**Deciders Reference**](docs/deciders.md) - Decision logic and thresholds
 - 💡 [**Examples**](docs/examples.md) - Real-world usage scenarios
 - 🐛 [**Troubleshooting**](docs/troubleshooting.md) - Common issues and solutions

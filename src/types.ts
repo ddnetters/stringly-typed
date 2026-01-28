@@ -66,7 +66,7 @@ export interface ValidationSummary {
 
 export interface ValidatorInput {
   files: { path: string; content: string }[];
-  checker: "grammar" | "char_count" | "custom" | "brand_style";
+  checker: "char_count" | "custom" | "brand_style";
   checkerOptions?: Record<string, any>;
   decider: "threshold" | "noCritical" | "custom";
   deciderOptions?: Record<string, any>;

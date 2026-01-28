@@ -21,7 +21,7 @@ jobs:
         uses: ddnetters/stringray@v1
         with:
           files: 'docs/**/*.md'
-          checker: 'grammar'
+          checker: 'char_count'
           decider: 'noCritical'
 ```
 
@@ -150,7 +150,7 @@ jobs:
         include:
           - name: "Documentation"
             files: "docs/**/*.md"
-            checker: "grammar"
+            checker: "char_count"
             decider: "noCritical"
             
           - name: "Source Code"
@@ -233,7 +233,7 @@ jobs:
         uses: ddnetters/stringray@v1
         with:
           files: ${{ steps.changed-files.outputs.all_changed_files }}
-          checker: 'grammar'
+          checker: 'char_count'
           decider: 'threshold'
           decider-options: '{"minValidRatio": 0.8}'
 ```
@@ -272,7 +272,7 @@ jobs:
         uses: ddnetters/stringray@v1
         with:
           files: 'src/utils/errors.js'
-          checker: 'grammar'
+          checker: 'char_count'
           decider: 'noCritical'
           
       # Check string lengths for UI
@@ -308,7 +308,7 @@ jobs:
         uses: ddnetters/stringray@v1
         with:
           files: 'content/**/*.{md,mdx}'
-          checker: 'grammar'
+          checker: 'char_count'
           decider: 'custom'
           decider-options: |
             {
@@ -378,7 +378,7 @@ Continue workflow even if validation fails:
   continue-on-error: true
   with:
     files: 'src/**/*.js'
-    checker: 'grammar'
+    checker: 'char_count'
     decider: 'threshold'
     
 - name: Report validation results
@@ -400,7 +400,7 @@ Report validation results to external systems:
   uses: ddnetters/stringray@v1
   with:
     files: 'src/**/*.js'
-    checker: 'grammar'
+    checker: 'char_count'
     decider: 'threshold'
     
 - name: Report to Slack
@@ -453,7 +453,7 @@ jobs:
         uses: ddnetters/stringray@v1
         with:
           files: ${{ steps.files.outputs.files }}
-          checker: 'grammar'
+          checker: 'char_count'
           decider: 'threshold'
           decider-options: '{"minValidRatio": 0.8}'
 ```
@@ -473,7 +473,7 @@ Validate only new or modified strings:
   uses: ddnetters/stringray@v1
   with:
     files: 'src/**/*.js'
-    checker: 'grammar'
+    checker: 'char_count'
     decider: 'threshold'
     # Custom logic to skip cached results
 ```
@@ -491,7 +491,7 @@ Use as a pre-commit hook:
 npm run build
 node dist/index.js \
   --files "$(git diff --cached --name-only --diff-filter=ACMR | grep -E '\.(js|ts|md)$' | tr '\n' ',')" \
-  --checker grammar \
+  --checker char_count \
   --decider threshold
 
 if [ $? -ne 0 ]; then
@@ -549,7 +549,7 @@ const files = glob.sync(process.argv[2] || 'src/**/*.js').map(path => ({
 
 const result = validateCodebaseStrings({
   files,
-  checker: 'grammar',
+  checker: 'char_count',
   decider: 'threshold',
   deciderOptions: { minValidRatio: 0.8 }
 });

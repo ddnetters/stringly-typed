@@ -4,7 +4,6 @@ import {
   StringExtractor,
   CheckerFactory,
   DeciderFactory,
-  GrammarChecker,
   CharCountChecker,
   CustomChecker,
   BrandStyleChecker,
@@ -39,12 +38,10 @@ describe('Index exports', () => {
   });
 
   it('should export checker classes', () => {
-    expect(GrammarChecker).toBeDefined();
     expect(CharCountChecker).toBeDefined();
     expect(CustomChecker).toBeDefined();
     expect(BrandStyleChecker).toBeDefined();
 
-    expect(new GrammarChecker()).toBeInstanceOf(GrammarChecker);
     expect(new CharCountChecker()).toBeInstanceOf(CharCountChecker);
     expect(new CustomChecker()).toBeInstanceOf(CustomChecker);
     expect(new BrandStyleChecker()).toBeInstanceOf(BrandStyleChecker);
@@ -53,7 +50,7 @@ describe('Index exports', () => {
   it('should export async checker utilities', () => {
     expect(typeof isAsyncChecker).toBe('function');
 
-    const syncChecker = new GrammarChecker();
+    const syncChecker = new CharCountChecker();
     const asyncChecker = new BrandStyleChecker();
 
     expect(isAsyncChecker(syncChecker)).toBe(false);

@@ -6,7 +6,6 @@ export {
   AsyncChecker,
   isAsyncChecker,
   CheckerFactory,
-  GrammarChecker,
   CharCountChecker,
   CustomChecker,
   BrandStyleChecker,

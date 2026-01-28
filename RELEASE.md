@@ -188,7 +188,7 @@ Use this template for GitHub releases:
 - uses: ddnetters/stringray@vX.Y.Z
   with:
     files: 'src/**/*.{js,ts,md}'
-    checker: 'grammar'
+    checker: 'char_count'
     decider: 'threshold'
 \`\`\`
 

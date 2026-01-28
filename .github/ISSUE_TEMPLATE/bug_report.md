@@ -35,7 +35,7 @@ assignees: ''
 - uses: ddnetters/stringray@v1
   with:
     files: 'src/**/*.js'
-    checker: 'grammar'
+    checker: 'char_count'
     decider: 'threshold'
 ```
 

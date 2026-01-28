@@ -29,7 +29,7 @@ jobs:
         uses: ./
         with:
           files: 'test-strings.js'
-          checker: 'grammar'
+          checker: 'char_count'
           decider: 'threshold'
           checker-options: '{}'
           decider-options: '{"minValidRatio": 0.8}'

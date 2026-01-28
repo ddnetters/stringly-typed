@@ -67,6 +67,6 @@ jobs:
       uses: ./
       with:
         files: 'src/**/*.ts'
-        checker: 'grammar'
+        checker: 'char_count'
         decider: 'threshold'
         decider-options: '{"minValidRatio": 0.8}'
