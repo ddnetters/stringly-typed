@@ -1,6 +1,6 @@
 {
   "name": "stringray",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "ddnetters",
   "description": "🌊 StringRay - Shine a light on your code's communication. GitHub Action for string validation with sonar-like precision.",
   "main": "dist/index.js",

@@ -11,6 +11,12 @@ Releases are automatically created when PRs with conventional commit titles are 
 - `BREAKING CHANGE` or `!` → Major version bump
 
 
+## [1.0.1](https://github.com/ddnetters/stringray/compare/v1.0.0...v1.0.1) (2026-01-28)
+
+### ♻️ Refactoring
+
+* remove Grammar Checker ([#18](https://github.com/ddnetters/stringray/issues/18)) ([3b9b86c](https://github.com/ddnetters/stringray/commit/3b9b86ccdf2118ab00418aa3d8a83f1eaa4511b6))
+
 ## 1.0.0 (2026-01-28)
 
 ### ✨ Features
