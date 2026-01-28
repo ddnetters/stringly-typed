@@ -6,6 +6,10 @@ module.exports = {
   transform: {
     '^.+\\.ts$': 'ts-jest',
   },
+  moduleNameMapper: {
+    '^@actions/github$': '<rootDir>/src/__mocks__/@actions/github.ts',
+    '^@actions/core$': '<rootDir>/src/__mocks__/@actions/core.ts',
+  },
   collectCoverageFrom: [
     'src/**/*.ts',
     '!src/**/*.d.ts',

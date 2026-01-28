@@ -12,7 +12,7 @@ describe('formatPRComment', () => {
 
     const comment = formatPRComment(output);
 
-    expect(comment).toContain('## 🌊 StringRay Results');
+    expect(comment).toContain('## 🎯 Stringly-Typed Results');
     expect(comment).toContain('✅');
     expect(comment).toContain('1/1 strings valid');
     expect(comment).toContain('All strings passed validation');
@@ -29,7 +29,7 @@ describe('formatPRComment', () => {
 
     const comment = formatPRComment(output);
 
-    expect(comment).toContain('## 🌊 StringRay Results');
+    expect(comment).toContain('## 🎯 Stringly-Typed Results');
     expect(comment).toContain('❌');
     // Collapsible section
     expect(comment).toContain('<details>');

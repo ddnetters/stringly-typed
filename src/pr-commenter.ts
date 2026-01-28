@@ -2,7 +2,7 @@
 import * as github from '@actions/github';
 import * as core from '@actions/core';
 
-const COMMENT_MARKER = '<!-- stringray-comment -->';
+const COMMENT_MARKER = '<!-- stringly-typed-comment -->';
 
 export async function postOrUpdateComment(body: string): Promise<void> {
   const token = process.env.GITHUB_TOKEN;
@@ -24,16 +24,8 @@ export async function postOrUpdateComment(body: string): Promise<void> {
 
   const markedBody = `${COMMENT_MARKER}\n${body}`;
 
-  // Find existing StringRay comment
-  const { data: comments } = await octokit.rest.issues.listComments({
-    owner,
-    repo,
-    issue_number: prNumber
-  });
-
-  const existingComment = comments.find(
-    (c: { body?: string }) => c.body?.includes(COMMENT_MARKER)
-  );
+  // Find existing Stringly-Typed comment using pagination to handle busy PRs
+  const existingComment = await findExistingComment(octokit, owner, repo, prNumber);
 
   if (existingComment) {
     // Update existing comment
@@ -54,4 +46,32 @@ export async function postOrUpdateComment(body: string): Promise<void> {
     });
     core.info(`Created PR comment #${newComment.id}`);
   }
+}
+
+type Octokit = ReturnType<typeof github.getOctokit>;
+
+async function findExistingComment(
+  octokit: Octokit,
+  owner: string,
+  repo: string,
+  prNumber: number
+): Promise<{ id: number } | undefined> {
+  // Use pagination to iterate through all comments on the PR
+  const iterator = octokit.paginate.iterator(octokit.rest.issues.listComments, {
+    owner,
+    repo,
+    issue_number: prNumber,
+    per_page: 100
+  });
+
+  for await (const { data: comments } of iterator) {
+    const found = comments.find(
+      (c: { body?: string | null }) => c.body?.includes(COMMENT_MARKER)
+    );
+    if (found) {
+      return { id: found.id };
+    }
+  }
+
+  return undefined;
 }

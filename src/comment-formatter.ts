@@ -32,7 +32,7 @@ export function formatPRComment(output: ValidatorOutput): string {
   const icon = summary.pass ? '✅' : '❌';
   const status = summary.pass ? 'Passed' : 'Failed';
 
-  let comment = `## 🌊 StringRay Results\n\n`;
+  let comment = `## 🎯 Stringly-Typed Results\n\n`;
   comment += `${icon} **${status}:** ${summary.reason}\n\n`;
 
   const invalidResults = results.filter(r => !r.valid);
@@ -55,7 +55,6 @@ export function formatPRComment(output: ValidatorOutput): string {
     }
 
     const issueCount = fileResults.length;
-    const displayCount = Math.min(issueCount, MAX_ISSUES_PER_FILE);
 
     // Collapsible section per file
     comment += `<details>\n`;
@@ -82,7 +81,7 @@ export function formatPRComment(output: ValidatorOutput): string {
     fileCount++;
   }
 
-  comment += `---\n*🌊 Posted by [StringRay](https://github.com/ddnetters/stringray)*`;
+  comment += `---\n*🎯 Posted by [Stringly-Typed](https://github.com/ddnetters/stringly-typed)*`;
 
   return comment;
 }
