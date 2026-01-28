@@ -1,99 +1,86 @@
 # 🌊 StringRay
 
-> **Shine a light on your code's communication.**
+> **AI-powered brand voice validation for your codebase.**
 
-StringRay is a GitHub Action that scans your codebase for string literals and validates their quality - checking length limits, brand style compliance, or custom rules you define.
+StringRay is a GitHub Action that scans your code for string literals and validates them against your brand style guide using AI. Ensure every user-facing message matches your voice and tone.
 
 ---
 
 ## Quickstart
 
-Add this to `.github/workflows/stringray.yml`:
+### 1. Create your style guide
+
+Add `STYLE_GUIDE.md` to your repo:
+
+```markdown
+# Brand Voice
+
+- Use active voice, not passive
+- Say "customers" not "users"
+- Keep sentences under 20 words
+- Be friendly but professional
+```
+
+### 2. Add the workflow
+
+Create `.github/workflows/stringray.yml`:
 
 ```yaml
 name: StringRay
 on: [push, pull_request]
 
 jobs:
-  validate:
+  brand-check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: ddnetters/stringray@v1
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         with:
-          files: 'src/**/*.{js,ts,md}'
-          checker: 'char_count'
+          files: 'src/**/*.{js,ts,tsx}'
+          checker: 'brand_style'
+          style-guide-file: 'STYLE_GUIDE.md'
           decider: 'threshold'
+          decider-options: '{"minValidRatio": 0.9}'
 ```
 
-That's it. StringRay now runs on every push and PR.
+That's it. StringRay now validates every string against your brand voice.
 
 ---
 
-## What It Does
-
-StringRay operates through a three-stage pipeline:
-
-```
-Files → String Extraction → Validation (Checkers) → Decision (Deciders) → Pass/Fail
-```
-
-**Example output:**
+## Example Output
 
 ```
 StringRay Results:
-├── src/messages.js
-│   ├── Line 1: "An error occurred while processing..." ❌ Too long (75 > 50)
-│   ├── Line 2: "Done" ✅ OK
-│   └── Line 3: "Please check your configuration..." ❌ Too long (58 > 50)
-└── Summary: 1/3 strings valid (33%) - FAILED
+├── src/components/Button.tsx
+│   ├── Line 12: "Click here to continue" ❌
+│   │   └── Use "Select" not "Click" (terminology)
+│   └── Line 18: "Your order has been placed" ✅ OK
+├── src/utils/errors.ts
+│   └── Line 5: "An error was encountered by the system" ❌
+│       └── Use active voice: "Something went wrong" (tone)
+└── Summary: 4/6 strings valid (67%) - FAILED
 ```
 
 ---
 
-## Configuration
+## Other Checkers
 
-### Inputs
+StringRay also supports non-AI checkers for simpler validation:
 
-| Input | Description | Default |
-|-------|-------------|---------|
-| `files` | Glob pattern for files to scan | `**/*.{js,ts,md,json}` |
-| `checker` | Validation type: `char_count`, `custom`, `brand_style` | `char_count` |
-| `checker-options` | JSON config for checker | `{}` |
-| `decider` | Decision logic: `threshold`, `noCritical`, `custom` | `threshold` |
-| `decider-options` | JSON config for decider | `{}` |
-
-### Outputs
-
-| Output | Description |
-|--------|-------------|
-| `results` | JSON array of all string validations |
-| `summary` | Human-readable pass/fail summary |
-| `pass` | Boolean for CI gates |
-
-### Example: Custom Length Limit
+| Checker | Use Case |
+|---------|----------|
+| `brand_style` | AI-powered voice & tone validation |
+| `char_count` | Enforce max string length |
+| `custom` | Your own JavaScript validation logic |
 
 ```yaml
+# Example: Enforce 80 character limit
 - uses: ddnetters/stringray@v1
   with:
-    files: 'src/**/*.{js,ts}'
     checker: 'char_count'
     checker-options: '{"maxChars": 80}'
-    decider: 'threshold'
-    decider-options: '{"minValidRatio": 0.95}'
-```
-
-### Example: Block TODOs in Production
-
-```yaml
-- uses: ddnetters/stringray@v1
-  with:
-    checker: 'custom'
-    checker-options: |
-      {
-        "logic": "!content.includes('TODO')"
-      }
-    decider: 'noCritical'
 ```
 
 ---
