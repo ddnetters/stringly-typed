@@ -8,7 +8,6 @@ import {
   CharCountChecker,
   CustomChecker,
   BrandStyleChecker,
-  AsyncChecker,
   isAsyncChecker,
   ThresholdDecider,
   NoCriticalDecider,

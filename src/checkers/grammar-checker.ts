@@ -2,7 +2,7 @@ import { Checker } from './base-checker';
 import { CheckResult } from '../types';
 
 export class GrammarChecker implements Checker {
-  check(content: string, options?: Record<string, any>): CheckResult {
+  check(content: string, _options?: Record<string, any>): CheckResult {
     const issues: string[] = [];
     
     if (content.length < 3) {
