@@ -4,6 +4,8 @@ import * as path from 'path';
 import { glob } from 'glob';
 import { validateCodebaseStrings, validateCodebaseStringsAsync } from './validator';
 import { ValidatorInput, ValidatorOutput } from './types';
+import { formatPRComment } from './comment-formatter';
+import { postOrUpdateComment } from './pr-commenter';
 
 async function run(): Promise<void> {
   try {
@@ -25,6 +27,8 @@ async function run(): Promise<void> {
     } catch (error) {
       throw new Error(`Invalid JSON in decider-options: ${error instanceof Error ? error.message : 'unknown error'}`);
     }
+
+    const commentMode = core.getInput('comment') || 'on-failure';
 
     // Load style guide from file if provided
     if (styleGuideFile) {
@@ -67,6 +71,15 @@ async function run(): Promise<void> {
     core.setOutput('results', JSON.stringify(result.results));
     core.setOutput('summary', JSON.stringify(result.summary));
     core.setOutput('pass', result.summary.pass.toString());
+
+    // Post PR comment if configured
+    if (commentMode !== 'never') {
+      const shouldComment = commentMode === 'always' || (commentMode === 'on-failure' && !result.summary.pass);
+      if (shouldComment) {
+        const commentBody = formatPRComment(result);
+        await postOrUpdateComment(commentBody);
+      }
+    }
 
     if (result.summary.pass) {
       core.info(`✅ Validation passed: ${result.summary.reason}`);
