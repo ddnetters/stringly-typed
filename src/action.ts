@@ -8,7 +8,7 @@ import { ValidatorInput, ValidatorOutput } from './types';
 async function run(): Promise<void> {
   try {
     const filesPattern = core.getInput('files') || '**/*.{js,ts,md,json}';
-    const checker = core.getInput('checker') as 'grammar' | 'char_count' | 'custom' | 'brand_style';
+    const checker = core.getInput('checker') as 'char_count' | 'custom' | 'brand_style';
     const styleGuideFile = core.getInput('style-guide-file');
     const decider = core.getInput('decider') as 'threshold' | 'noCritical' | 'custom';
 
