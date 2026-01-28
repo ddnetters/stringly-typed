@@ -20,7 +20,7 @@ assignees: ''
 
 ```yaml
 # Example configuration
-- uses: ddnetters/stringray@v1
+- uses: ddnetters/stringly-typed@v1
   with:
     files: 'src/**/*.js'
     checker: 'new-feature'

@@ -1,4 +1,4 @@
-name: Test StringRay
+name: Test Stringly-Typed
 on: 
   push:
     branches: [ main ]
@@ -6,7 +6,7 @@ on:
     branches: [ main ]
 
 jobs:
-  test-stringray:
+  test-stringly-typed:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -24,8 +24,8 @@ jobs:
       - name: Build action
         run: npm run build
         
-      - name: Test StringRay Action
-        id: stringray
+      - name: Test Stringly-Typed Action
+        id: stringly-typed
         uses: ./
         with:
           files: 'test-strings.js'
@@ -34,11 +34,11 @@ jobs:
           checker-options: '{}'
           decider-options: '{"minValidRatio": 0.8}'
           
-      - name: Show StringRay Results
+      - name: Show Stringly-Typed Results
         run: |
-          echo "Results: ${{ steps.stringray.outputs.results }}"
-          echo "Summary: ${{ steps.stringray.outputs.summary }}"
-          echo "Pass: ${{ steps.stringray.outputs.pass }}"
+          echo "Results: ${{ steps.stringly-typed.outputs.results }}"
+          echo "Summary: ${{ steps.stringly-typed.outputs.summary }}"
+          echo "Pass: ${{ steps.stringly-typed.outputs.pass }}"
           
       - name: List files being processed
         run: |

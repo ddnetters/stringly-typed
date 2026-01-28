@@ -303,7 +303,7 @@ function isAsyncChecker(checker: Checker | AsyncChecker): checker is AsyncChecke
 
 **Example:**
 ```typescript
-import { CheckerFactory, isAsyncChecker } from 'stringray';
+import { CheckerFactory, isAsyncChecker } from 'stringly-typed';
 
 const checker = CheckerFactory.createChecker('brand_style');
 
@@ -380,7 +380,7 @@ class BrandStyleChecker implements AsyncChecker {
 
 **Example:**
 ```typescript
-import { BrandStyleChecker } from 'stringray';
+import { BrandStyleChecker } from 'stringly-typed';
 
 const checker = new BrandStyleChecker();
 

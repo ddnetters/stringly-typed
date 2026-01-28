@@ -1,4 +1,4 @@
-# 🌊 StringRay
+# 🎯 Stringly-Typed
 
 > **Shine a light on your code's communication.**
 
@@ -6,7 +6,7 @@ A powerful, sonar-powered GitHub Action that swims through your codebase to illu
 
 ## Overview
 
-StringRay provides a comprehensive solution for maintaining string quality across your codebase. Like underwater sonar detecting objects in the depths, StringRay scans through your files, extracts strings, validates them using configurable checkers, and makes intelligent pass/fail decisions.
+Stringly-Typed provides a comprehensive solution for maintaining string quality across your codebase. Like underwater sonar detecting objects in the depths, Stringly-Typed scans through your files, extracts strings, validates them using configurable checkers, and makes intelligent pass/fail decisions.
 
 ## Quick Start
 
@@ -20,8 +20,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: 🔦 Scan with StringRay
-        uses: ddnetters/stringray@v1
+      - name: 🔦 Scan with Stringly-Typed
+        uses: ddnetters/stringly-typed@v1
         with:
           files: 'src/**/*.{js,ts,md}'
           checker: 'char_count'
@@ -90,8 +90,8 @@ Detect potential security issues in string literals and prevent hardcoded secret
 
 ## Support
 
-- [GitHub Issues](https://github.com/ddnetters/stringray/issues)
-- [Discussions](https://github.com/ddnetters/stringray/discussions)
+- [GitHub Issues](https://github.com/ddnetters/stringly-typed/issues)
+- [Discussions](https://github.com/ddnetters/stringly-typed/discussions)
 - [Contributing Guide](../CONTRIBUTING.md)
 
 ## License

@@ -152,7 +152,7 @@ pids
 ehthumbs.db
 Thumbs.db
 
-# StringRay specific
+# Stringly-Typed specific
 .string-validation-cache
 util-scripts/
 

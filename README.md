@@ -1,8 +1,8 @@
-# 🌊 StringRay
+# 🎯 Stringly-Typed
 
 > **AI-powered brand voice validation for your codebase.**
 
-StringRay is a GitHub Action that scans your code for string literals and validates them against your brand style guide using AI. Ensure every user-facing message matches your voice and tone.
+Stringly-Typed is a GitHub Action that scans your code for string literals and validates them against your brand style guide using AI. Ensure every user-facing message matches your voice and tone.
 
 ---
 
@@ -23,10 +23,10 @@ Add `STYLE_GUIDE.md` to your repo:
 
 ### 2. Add the workflow
 
-Create `.github/workflows/stringray.yml`:
+Create `.github/workflows/stringly-typed.yml`:
 
 ```yaml
-name: StringRay
+name: Stringly-Typed
 on: [push, pull_request]
 
 jobs:
@@ -34,7 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: ddnetters/stringray@v1
+      - uses: ddnetters/stringly-typed@v1
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         with:
@@ -45,14 +45,14 @@ jobs:
           decider-options: '{"minValidRatio": 0.9}'
 ```
 
-That's it. StringRay now validates every string against your brand voice.
+That's it. Stringly-Typed now validates every string against your brand voice.
 
 ---
 
 ## Example Output
 
 ```
-StringRay Results:
+Stringly-Typed Results:
 ├── src/components/Button.tsx
 │   ├── Line 12: "Click here to continue" ❌
 │   │   └── Use "Select" not "Click" (terminology)
@@ -67,7 +67,7 @@ StringRay Results:
 
 ## Other Checkers
 
-StringRay also supports non-AI checkers for simpler validation:
+Stringly-Typed also supports non-AI checkers for simpler validation:
 
 | Checker | Use Case |
 |---------|----------|
@@ -77,7 +77,7 @@ StringRay also supports non-AI checkers for simpler validation:
 
 ```yaml
 # Example: Enforce 80 character limit
-- uses: ddnetters/stringray@v1
+- uses: ddnetters/stringly-typed@v1
   with:
     checker: 'char_count'
     checker-options: '{"maxChars": 80}'
@@ -103,7 +103,7 @@ StringRay also supports non-AI checkers for simpler validation:
 
 Contributions welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
-- [Report Issues](https://github.com/ddnetters/stringray/issues)
+- [Report Issues](https://github.com/ddnetters/stringly-typed/issues)
 
 ## License
 

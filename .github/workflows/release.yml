@@ -69,7 +69,7 @@ jobs:
           npm ci
           npm run build
       
-      - name: 🔦 Test StringRay on itself
+      - name: 🔦 Test Stringly-Typed on itself
         uses: ./
         with:
           files: 'src/**/*.ts'
@@ -174,7 +174,7 @@ See the full changelog for details of what's included in this release.
 ## 🚀 Quick Start
 
 \`\`\`yaml
-- uses: ddnetters/stringray@\$VERSION
+- uses: ddnetters/stringly-typed@\$VERSION
   with:
     files: 'src/**/*.{js,ts,md}'
     checker: 'char_count'
@@ -193,7 +193,7 @@ EOF
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ needs.validate-release.outputs.version }}
-          name: 🌊 StringRay ${{ needs.validate-release.outputs.version }}
+          name: 🎯 Stringly-Typed ${{ needs.validate-release.outputs.version }}
           body_path: release-notes.md
           draft: false
           prerelease: ${{ needs.validate-release.outputs.is-prerelease }}
@@ -235,12 +235,12 @@ EOF
             pkg.keywords = ['github-action', 'string-validation', 'code-quality', 'linting'];
             pkg.repository = {
               type: 'git',
-              url: 'https://github.com/ddnetters/stringray.git'
+              url: 'https://github.com/ddnetters/stringly-typed.git'
             };
             pkg.bugs = {
-              url: 'https://github.com/ddnetters/stringray/issues'
+              url: 'https://github.com/ddnetters/stringly-typed/issues'
             };
-            pkg.homepage = 'https://github.com/ddnetters/stringray#readme';
+            pkg.homepage = 'https://github.com/ddnetters/stringly-typed#readme';
             require('fs').writeFileSync('package.json', JSON.stringify(pkg, null, 2));
           "
       
@@ -300,17 +300,17 @@ EOF
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 category_slug: "announcements",
-                title: `🌊 StringRay ${version} Released!`,
+                title: `🎯 Stringly-Typed ${version} Released!`,
                 body: `
-            ## 🎉 StringRay ${version} is now available!
+            ## 🎉 Stringly-Typed ${version} is now available!
 
             **Shine a light on your code's communication with this latest release.**
 
             ### 🚀 Quick Start
 
             \`\`\`yaml
-            - name: 🔦 Scan with StringRay
-              uses: ddnetters/stringray@${version}
+            - name: 🔦 Scan with Stringly-Typed
+              uses: ddnetters/stringly-typed@${version}
               with:
                 files: 'src/**/*.{js,ts,md}'
                 checker: 'char_count'
@@ -327,7 +327,7 @@ EOF
 
             ---
 
-            **🔦 Happy string scanning! 🌊**
+            **🔦 Happy string scanning! 🎯**
                 `
               });
               console.log("✅ Created release discussion");

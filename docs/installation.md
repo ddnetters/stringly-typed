@@ -24,7 +24,7 @@ jobs:
         uses: actions/checkout@v3
       
       - name: Validate strings
-        uses: ddnetters/stringray@v1
+        uses: ddnetters/stringly-typed@v1
         with:
           files: 'src/**/*.{js,ts,md}'
           checker: 'char_count'
@@ -36,13 +36,13 @@ jobs:
 For production use, pin to a specific version:
 
 ```yaml
-- uses: ddnetters/stringray@v1.0.0
+- uses: ddnetters/stringly-typed@v1.0.0
 ```
 
 Or use a commit SHA for maximum security:
 
 ```yaml
-- uses: ddnetters/stringray@v1
+- uses: ddnetters/stringly-typed@v1
 ```
 
 ## Local Development
@@ -56,8 +56,8 @@ Or use a commit SHA for maximum security:
 
 ```bash
 # Clone the repository
-git clone https://github.com/ddnetters/stringray.git
-cd stringray
+git clone https://github.com/ddnetters/stringly-typed.git
+cd stringly-typed
 
 # Install dependencies
 npm install
@@ -141,7 +141,7 @@ jobs:
         with:
           node-version: '18'
       - name: Validate strings
-        uses: ddnetters/stringray@v1
+        uses: ddnetters/stringly-typed@v1
 ```
 
 ## Enterprise Setup

@@ -1,6 +1,6 @@
-name: '🌊 StringRay'
-description: 'Shine a light on your code''s communication - Sonar-powered string validation for quality gates'
-author: 'StringRay Team'
+name: '🎯 Stringly-Typed'
+description: 'AI-powered brand voice validation for your codebase - String validation for quality gates'
+author: 'Stringly-Typed Team'
 inputs:
   files:
     description: 'Glob pattern for files to validate'

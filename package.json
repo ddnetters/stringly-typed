@@ -1,8 +1,8 @@
 {
-  "name": "stringray",
+  "name": "stringly-typed",
   "version": "1.0.2",
   "author": "ddnetters",
-  "description": "🌊 StringRay - Shine a light on your code's communication. GitHub Action for string validation with sonar-like precision.",
+  "description": "🎯 Stringly-Typed - AI-powered brand voice validation for your codebase. GitHub Action for string validation with precision.",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",

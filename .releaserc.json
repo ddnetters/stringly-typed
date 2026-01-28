@@ -45,7 +45,7 @@
       "@semantic-release/changelog",
       {
         "changelogFile": "CHANGELOG.md",
-        "changelogTitle": "# 📊 Changelog\n\nAll notable changes to StringRay are automatically documented here.\n\nThis project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).\n\nReleases are automatically created when PRs with conventional commit titles are merged to main:\n- `feat:` → Minor version bump (new features)\n- `fix:` → Patch version bump (bug fixes) \n- `docs:`, `chore:`, `style:`, etc. → Patch version bump\n- `BREAKING CHANGE` or `!` → Major version bump\n"
+        "changelogTitle": "# 📊 Changelog\n\nAll notable changes to Stringly-Typed are automatically documented here.\n\nThis project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).\n\nReleases are automatically created when PRs with conventional commit titles are merged to main:\n- `feat:` → Minor version bump (new features)\n- `fix:` → Patch version bump (bug fixes) \n- `docs:`, `chore:`, `style:`, etc. → Patch version bump\n- `BREAKING CHANGE` or `!` → Major version bump\n"
       }
     ],
     [
@@ -58,8 +58,8 @@
       "@semantic-release/github",
       {
         "releasedLabels": ["released"],
-        "releaseNameTemplate": "🌊 StringRay ${nextRelease.version}",
-        "releaseBodyTemplate": "## 🚀 Auto Release\n\n### 📋 What's Changed\n\n${nextRelease.notes}\n\n### 🔦 Quick Start\n\n```yaml\n- uses: ddnetters/stringray@${nextRelease.version}\n  with:\n    files: 'src/**/*.{js,ts,md}'\n    checker: 'grammar'\n    decider: 'threshold'\n```\n\n**Full Changelog**: https://github.com/ddnetters/stringray/compare/${lastRelease.gitTag}...${nextRelease.gitTag}"
+        "releaseNameTemplate": "🌊 Stringly-Typed ${nextRelease.version}",
+        "releaseBodyTemplate": "## 🚀 Auto Release\n\n### 📋 What's Changed\n\n${nextRelease.notes}\n\n### 🔦 Quick Start\n\n```yaml\n- uses: ddnetters/stringly-typed@${nextRelease.version}\n  with:\n    files: 'src/**/*.{js,ts,md}'\n    checker: 'grammar'\n    decider: 'threshold'\n```\n\n**Full Changelog**: https://github.com/ddnetters/stringly-typed/compare/${lastRelease.gitTag}...${nextRelease.gitTag}"
       }
     ],
     [

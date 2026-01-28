@@ -1,6 +1,6 @@
-# 🚀 StringRay Release Process
+# 🚀 Stringly-Typed Release Process
 
-This document outlines the release process for StringRay, including versioning, tagging, and publishing.
+This document outlines the release process for Stringly-Typed, including versioning, tagging, and publishing.
 
 ## 📋 Release Checklist
 
@@ -20,7 +20,7 @@ This document outlines the release process for StringRay, including versioning, 
 
 ## 🏷️ Versioning Strategy
 
-StringRay follows [Semantic Versioning](https://semver.org/):
+Stringly-Typed follows [Semantic Versioning](https://semver.org/):
 
 - **Major (X.0.0)**: Breaking changes to the action interface
 - **Minor (1.X.0)**: New features, backward compatible
@@ -76,7 +76,7 @@ The release process is automated via GitHub Actions:
 
 ## 📦 npm Publishing (Optional)
 
-If you want to publish StringRay as an npm package:
+If you want to publish Stringly-Typed as an npm package:
 
 ### Setup
 1. Create npm account and get auth token
@@ -85,8 +85,8 @@ If you want to publish StringRay as an npm package:
 
 ### Package Configuration
 The package will be published as:
-- **Name**: `stringray`
-- **Scope**: Could be `@ddnetters/stringray`
+- **Name**: `stringly-typed`
+- **Scope**: Could be `@ddnetters/stringly-typed`
 - **Registry**: npm public registry
 
 ## 🏗️ Manual Release Process
@@ -166,7 +166,7 @@ git push origin main
 Use this template for GitHub releases:
 
 ```markdown
-## 🌊 StringRay vX.Y.Z
+## 🎯 Stringly-Typed vX.Y.Z
 
 ### ✨ New Features
 - Feature 1 description
@@ -185,19 +185,19 @@ Use this template for GitHub releases:
 ## 🚀 Quick Start
 
 \`\`\`yaml
-- uses: ddnetters/stringray@vX.Y.Z
+- uses: ddnetters/stringly-typed@vX.Y.Z
   with:
     files: 'src/**/*.{js,ts,md}'
     checker: 'char_count'
     decider: 'threshold'
 \`\`\`
 
-**Full Changelog**: https://github.com/ddnetters/stringray/compare/vX.Y.Z-1...vX.Y.Z
+**Full Changelog**: https://github.com/ddnetters/stringly-typed/compare/vX.Y.Z-1...vX.Y.Z
 ```
 
 ## 🎯 Version Tags & Release Branches
 
-StringRay uses a **release branch pattern** to keep the main branch clean. The compiled `dist/` folder is not committed to main - instead, it's published to release branches during the release process.
+Stringly-Typed uses a **release branch pattern** to keep the main branch clean. The compiled `dist/` folder is not committed to main - instead, it's published to release branches during the release process.
 
 ### How It Works
 
@@ -211,13 +211,13 @@ StringRay uses a **release branch pattern** to keep the main branch clean. The c
 ### Usage Examples
 ```yaml
 # Use latest in major version (recommended)
-uses: ddnetters/stringray@v1
+uses: ddnetters/stringly-typed@v1
 
 # Pin to exact version (for maximum stability)
-uses: ddnetters/stringray@v1.2.3
+uses: ddnetters/stringly-typed@v1.2.3
 
 # Reference release branch directly (alternative)
-uses: ddnetters/stringray@releases/v1
+uses: ddnetters/stringly-typed@releases/v1
 ```
 
 ## 🚨 Release Rollback
@@ -255,6 +255,6 @@ Track these metrics for releases:
 ## 🤝 Questions?
 
 If you have questions about the release process:
-- Check existing [GitHub Issues](https://github.com/ddnetters/stringray/issues)
-- Create a [Discussion](https://github.com/ddnetters/stringray/discussions)
+- Check existing [GitHub Issues](https://github.com/ddnetters/stringly-typed/issues)
+- Create a [Discussion](https://github.com/ddnetters/stringly-typed/discussions)
 - Review previous releases for examples

@@ -1,6 +1,6 @@
 # 🏷️ PR Title Convention
 
-StringRay uses automated releases based on PR titles. Please format your PR titles using conventional commits:
+Stringly-Typed uses automated releases based on PR titles. Please format your PR titles using conventional commits:
 
 ## 📋 Format
 

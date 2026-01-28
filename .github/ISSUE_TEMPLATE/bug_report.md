@@ -16,13 +16,13 @@ assignees: ''
 
 ## Steps to reproduce
 
-1. Configure StringRay with: `...`
+1. Configure Stringly-Typed with: `...`
 2. Run on files: `...`
 3. See error: `...`
 
 ## Environment
 
-- **StringRay Version:** `v1.0.0`
+- **Stringly-Typed Version:** `v1.0.0`
 - **Runner:** `ubuntu-latest` / `windows-latest` / `macos-latest`
 - **Files:** What file types are you scanning?
 
@@ -31,8 +31,8 @@ assignees: ''
 **Any other info that might help debug this**
 
 ```yaml
-# Your StringRay configuration
-- uses: ddnetters/stringray@v1
+# Your Stringly-Typed configuration
+- uses: ddnetters/stringly-typed@v1
   with:
     files: 'src/**/*.js'
     checker: 'char_count'

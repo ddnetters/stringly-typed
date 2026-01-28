@@ -1,10 +1,10 @@
-# 🤝 Contributing to StringRay
+# 🤝 Contributing to Stringly-Typed
 
-Thanks for your interest in StringRay! This is a hobby project, so contributions are welcome but kept simple.
+Thanks for your interest in Stringly-Typed! This is a hobby project, so contributions are welcome but kept simple.
 
 ## 🐛 Found a Bug?
 
-- Check if it's already reported in [Issues](https://github.com/ddnetters/stringray/issues)
+- Check if it's already reported in [Issues](https://github.com/ddnetters/stringly-typed/issues)
 - If not, open a new issue with:
   - What you expected vs what happened
   - Steps to reproduce
@@ -40,7 +40,7 @@ See [PR Title Convention](.github/PULL_REQUEST_TITLE_CONVENTION.md) for full det
 
 ```bash
 git clone your-fork
-cd stringray
+cd stringly-typed
 npm install
 npm test
 ```

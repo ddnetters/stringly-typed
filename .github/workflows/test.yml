@@ -1,4 +1,4 @@
-name: 🌊 StringRay CI
+name: 🎯 Stringly-Typed CI
 
 on:
   push:
@@ -63,7 +63,7 @@ jobs:
     - name: Build
       run: npm run build
     
-    - name: 🔦 Test StringRay Action
+    - name: 🔦 Test Stringly-Typed Action
       uses: ./
       with:
         files: 'src/**/*.ts'

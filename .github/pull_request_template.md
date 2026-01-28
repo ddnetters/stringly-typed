@@ -1,4 +1,4 @@
-# 🌊 StringRay Pull Request
+# 🎯 Stringly-Typed Pull Request
 
 > **📋 Important:** Use conventional commit format in PR title for auto-releases!  
 > See [PR Title Convention](.github/PULL_REQUEST_TITLE_CONVENTION.md) for examples.
