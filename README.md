@@ -36,6 +36,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: ddnetters/stringly-typed@v1
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         with:
           files: 'src/**/*.{js,ts,tsx}'
@@ -61,6 +62,26 @@ Stringly-Typed Results:
 │   └── Line 5: "An error was encountered by the system" ❌
 │       └── Use active voice: "Something went wrong" (tone)
 └── Summary: 4/6 strings valid (67%) - FAILED
+```
+
+---
+
+## PR Comments
+
+StringRay can automatically comment on pull requests with validation results.
+
+| Value | Behavior |
+|-------|----------|
+| `on-failure` | Comment only when validation fails (default) |
+| `always` | Comment on every PR run |
+| `never` | Disable PR comments |
+
+```yaml
+- uses: ddnetters/stringray@v1
+  env:
+    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  with:
+    comment: 'on-failure'
 ```
 
 ---
