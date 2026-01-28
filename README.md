@@ -1,5 +1,9 @@
 # 🎯 Stringly-Typed
 
+[![GitHub Marketplace](https://img.shields.io/badge/Marketplace-Stringly--Typed-blue?logo=github)](https://github.com/marketplace/actions/stringly-typed)
+[![GitHub release](https://img.shields.io/github/v/release/ddnetters/stringly-typed)](https://github.com/ddnetters/stringly-typed/releases)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 > **AI-powered brand voice validation for your codebase.**
 
 Stringly-Typed is a GitHub Action that scans your code for string literals and validates them against your brand style guide using AI. Ensure every user-facing message matches your voice and tone.
@@ -68,7 +72,7 @@ Stringly-Typed Results:
 
 ## PR Comments
 
-StringRay can automatically comment on pull requests with validation results.
+Stringly-Typed can automatically comment on pull requests with validation results.
 
 | Value | Behavior |
 |-------|----------|
@@ -77,7 +81,7 @@ StringRay can automatically comment on pull requests with validation results.
 | `never` | Disable PR comments |
 
 ```yaml
-- uses: ddnetters/stringray@v1
+- uses: ddnetters/stringly-typed@v1
   env:
     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   with:
