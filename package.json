@@ -34,6 +34,7 @@
   },
   "dependencies": {
     "@actions/core": "^2.0.3",
+    "@actions/github": "^9.0.0",
     "@langchain/core": "^1.1.17",
     "@langchain/openai": "^1.2.3",
     "glob": "^13.0.0",
