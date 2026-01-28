@@ -27,7 +27,7 @@ inputs:
     required: false
     default: '{}'
   comment:
-    description: 'PR comment behavior: on-failure, always, or never'
+    description: 'PR comment behavior: on-failure, always, or never. Requires GITHUB_TOKEN env var.'
     required: false
     default: 'on-failure'
 outputs:
