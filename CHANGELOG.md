@@ -11,6 +11,12 @@ Releases are automatically created when PRs with conventional commit titles are 
 - `BREAKING CHANGE` or `!` → Major version bump
 
 
+## [1.2.0](https://github.com/ddnetters/stringly-typed/compare/v1.1.3...v1.2.0) (2026-01-30)
+
+### ✨ Features
+
+* add landing page website with auto-deploy ([9d42d37](https://github.com/ddnetters/stringly-typed/commit/9d42d373550f994d1cc80b2ac55eaba6b56f6d7b))
+
 ## [1.1.3](https://github.com/ddnetters/stringly-typed/compare/v1.1.2...v1.1.3) (2026-01-28)
 
 ### 👷 CI/CD
