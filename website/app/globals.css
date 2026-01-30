@@ -1,0 +1,87 @@
+@import "tailwindcss";
+
+/* Soul Session Color Palette */
+:root {
+  /* Primary colors */
+  --burnt-sienna: #C45D3E;
+  --mustard-gold: #D4A853;
+  --warm-cream: #F5EDE4;
+  --chocolate-brown: #3D2B23;
+  --deep-burgundy: #8B3A3A;
+
+  /* Semantic mappings */
+  --background: var(--warm-cream);
+  --foreground: var(--chocolate-brown);
+  --primary: var(--burnt-sienna);
+  --secondary: var(--mustard-gold);
+  --accent: var(--deep-burgundy);
+
+  /* Terminal colors */
+  --terminal-bg: var(--chocolate-brown);
+  --terminal-text: var(--warm-cream);
+  --terminal-success: var(--mustard-gold);
+  --terminal-error: var(--burnt-sienna);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-burnt-sienna: var(--burnt-sienna);
+  --color-mustard-gold: var(--mustard-gold);
+  --color-warm-cream: var(--warm-cream);
+  --color-chocolate-brown: var(--chocolate-brown);
+  --color-deep-burgundy: var(--deep-burgundy);
+  --font-display: var(--font-righteous);
+  --font-body: var(--font-source-serif);
+  --font-mono: var(--font-jetbrains-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body), Georgia, serif;
+}
+
+/* Film grain overlay effect */
+.grain-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+/* Terminal scan lines effect */
+.scan-lines {
+  position: relative;
+}
+
+.scan-lines::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.03) 2px,
+    rgba(0, 0, 0, 0.03) 4px
+  );
+}
+
+/* Typewriter cursor */
+.Typewriter__cursor {
+  color: var(--mustard-gold);
+  font-weight: 100;
+}
