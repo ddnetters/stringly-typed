@@ -11,6 +11,12 @@ Releases are automatically created when PRs with conventional commit titles are 
 - `BREAKING CHANGE` or `!` → Major version bump
 
 
+## [1.2.1](https://github.com/ddnetters/stringly-typed/compare/v1.2.0...v1.2.1) (2026-01-30)
+
+### 🐛 Bug Fixes
+
+* use Firebase CLI directly for WIF-based deploy ([b1cac65](https://github.com/ddnetters/stringly-typed/commit/b1cac65df3af066de1060ff40f660f046938f876))
+
 ## [1.2.0](https://github.com/ddnetters/stringly-typed/compare/v1.1.3...v1.2.0) (2026-01-30)
 
 ### ✨ Features
