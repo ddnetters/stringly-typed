@@ -9,7 +9,7 @@ This guide covers how to configure stringly-typed with different LLM providers f
 | [OpenAI](#openai) | `openai:gpt-4o-mini` | `OPENAI_API_KEY` |
 | [OpenRouter](#openrouter) | `openai:<model-id>` | `OPENAI_API_KEY`, `OPENAI_BASE_URL` |
 | [Anthropic](#anthropic) | `anthropic:claude-3-5-haiku-latest` | `ANTHROPIC_API_KEY` |
-| [Google AI](#google-ai) | `google:gemini-1.5-flash` | `GOOGLE_API_KEY` |
+| [Google AI](#google-ai) | `google:gemini-2.0-flash` | `GOOGLE_API_KEY` |
 | [Azure OpenAI](#azure-openai) | `azure:gpt-4o-mini` | `AZURE_OPENAI_API_KEY`, `AZURE_OPENAI_ENDPOINT` |
 | [AWS Bedrock](#aws-bedrock) | `bedrock:anthropic.claude-3-haiku` | AWS credentials |
 | [Together AI](#together-ai) | `openai:<model-id>` | `OPENAI_API_KEY`, `OPENAI_BASE_URL` |
@@ -112,8 +112,9 @@ jobs:
 |----------|----------|------|
 | `openai:anthropic/claude-3.5-haiku` | Anthropic | $ |
 | `openai:anthropic/claude-3.5-sonnet` | Anthropic | $$ |
-| `openai:google/gemini-flash-1.5` | Google | $ |
-| `openai:meta-llama/llama-3.1-70b-instruct` | Meta | $ |
+| `openai:google/gemini-2.0-flash-001` | Google | $ |
+| `openai:google/gemini-3-flash-preview` | Google | $ |
+| `openai:meta-llama/llama-3.3-70b-instruct` | Meta | $ |
 | `openai:mistralai/mistral-large` | Mistral | $$ |
 | `openai:openai/gpt-4o-mini` | OpenAI | $ |
 
@@ -198,7 +199,7 @@ jobs:
           checker: brand_style
           checker-options: |
             {
-              "model": "google:gemini-1.5-flash"
+              "model": "google:gemini-2.0-flash"
             }
           style-guide-file: STYLE_GUIDE.md
           decider: noCritical
@@ -211,9 +212,9 @@ jobs:
 
 | Model | Cost | Best For |
 |-------|------|----------|
-| `google:gemini-1.5-flash` | $ | Fast, cost-effective |
+| `google:gemini-2.0-flash` | $ | Fast, cost-effective (recommended) |
+| `google:gemini-3-flash-preview` | $ | Latest preview model |
 | `google:gemini-1.5-pro` | $$ | High-quality analysis |
-| `google:gemini-2.0-flash` | $ | Latest flash model |
 
 ---
 
