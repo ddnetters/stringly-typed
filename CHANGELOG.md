@@ -11,6 +11,21 @@ Releases are automatically created when PRs with conventional commit titles are 
 - `BREAKING CHANGE` or `!` → Major version bump
 
 
+## [1.5.0](https://github.com/ddnetters/stringly-typed/compare/v1.4.14...v1.5.0) (2026-01-31)
+
+### ✨ Features
+
+* **website:** add syntax highlighting to How It Works section ([b32741e](https://github.com/ddnetters/stringly-typed/commit/b32741ec9bbfe820f0834d910e6e0961f8e08c69))
+* **website:** update hero with real GitHub Action output ([da39353](https://github.com/ddnetters/stringly-typed/commit/da39353b68e26096aa31b8f80dee7ffef50c7d14))
+
+### 🐛 Bug Fixes
+
+* add retry logic for malformed LLM JSON responses ([#29](https://github.com/ddnetters/stringly-typed/issues/29)) ([0b99746](https://github.com/ddnetters/stringly-typed/commit/0b997467d7ee60703c4400cf7ee0fea344b976c4)), closes [#28](https://github.com/ddnetters/stringly-typed/issues/28)
+
+### 🎨 Styling
+
+* use inline code blocks for filenames in quickstart steps ([b2528fc](https://github.com/ddnetters/stringly-typed/commit/b2528fcddc5b5696b572e03e31eafb333d82b83e))
+
 ## [1.4.14](https://github.com/ddnetters/stringly-typed/compare/v1.4.13...v1.4.14) (2026-01-31)
 
 ### 🐛 Bug Fixes
