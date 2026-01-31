@@ -4,6 +4,7 @@ import posthog from "posthog-js";
 import { PostHogProvider as PHProvider } from "posthog-js/react";
 import { useEffect, useState, useRef } from "react";
 import { CookieConsent, getConsentStatus, type ConsentStatus } from "./CookieConsent";
+import { Analytics } from "./Analytics";
 
 function initPostHog() {
   if (
@@ -85,6 +86,7 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
   return (
     <PHProvider client={posthog}>
       {children}
+      {consentStatus === "granted" && <Analytics />}
       <CookieConsent onConsentChange={handleConsentChange} />
     </PHProvider>
   );
