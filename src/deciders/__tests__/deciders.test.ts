@@ -116,6 +116,77 @@ describe('NoCriticalDecider', () => {
     expect(result.pass).toBe(true);
     expect(result.reason).toContain('No critical issues found');
   });
+
+  it('should fail when details contain error severity violations', () => {
+    const results: ValidationResult[] = [{
+      file: 'test.js',
+      line: 1,
+      start: 0,
+      end: 10,
+      content: 'test',
+      valid: false,
+      message: 'Brand style violations found',
+      details: [
+        { type: 'tone', severity: 'error', original: 'bad text', explanation: 'too formal' }
+      ]
+    }];
+
+    const result = decider.decide(results);
+    expect(result.pass).toBe(false);
+    expect(result.reason).toContain('Found 1 critical issue(s)');
+  });
+
+  it('should pass when details only contain warning severity violations', () => {
+    const results: ValidationResult[] = [{
+      file: 'test.js',
+      line: 1,
+      start: 0,
+      end: 10,
+      content: 'test',
+      valid: false,
+      message: 'Brand style violations found',
+      details: [
+        { type: 'tone', severity: 'warning', original: 'bad text', explanation: 'could be better' }
+      ]
+    }];
+
+    const result = decider.decide(results);
+    expect(result.pass).toBe(true);
+    expect(result.reason).toContain('No critical issues found');
+  });
+
+  it('should count multiple results with error severity details', () => {
+    const results: ValidationResult[] = [
+      {
+        file: 'test1.js',
+        line: 1,
+        start: 0,
+        end: 10,
+        content: 'test1',
+        valid: false,
+        message: 'Brand style violations found',
+        details: [
+          { type: 'tone', severity: 'error', original: 'bad', explanation: 'too formal' }
+        ]
+      },
+      {
+        file: 'test2.js',
+        line: 2,
+        start: 0,
+        end: 10,
+        content: 'test2',
+        valid: false,
+        message: 'Brand style violations found',
+        details: [
+          { type: 'terminology', severity: 'error', original: 'users', explanation: 'say customers' }
+        ]
+      }
+    ];
+
+    const result = decider.decide(results);
+    expect(result.pass).toBe(false);
+    expect(result.reason).toContain('Found 2 critical issue(s)');
+  });
 });
 
 describe('CustomDecider', () => {
