@@ -65,12 +65,15 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
+          # Save original commit SHA before creating orphan branch
+          ORIGINAL_SHA=$(git rev-parse HEAD)
+
           # Create orphan branch with only release files
           git checkout --orphan releases/$MAJOR_VERSION-temp
 
           # Remove everything, then add back only what's needed
           git rm -rf .
-          git checkout HEAD -- action.yml package.json README.md LICENSE 2>/dev/null || true
+          git checkout $ORIGINAL_SHA -- action.yml package.json README.md LICENSE
 
           # Add the bundled dist (force add since it's gitignored)
           git add -f dist/index.js dist/index.js.map
