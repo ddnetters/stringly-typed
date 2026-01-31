@@ -11,6 +11,12 @@ Releases are automatically created when PRs with conventional commit titles are 
 - `BREAKING CHANGE` or `!` → Major version bump
 
 
+## [1.4.5](https://github.com/ddnetters/stringly-typed/compare/v1.4.4...v1.4.5) (2026-01-31)
+
+### 📚 Documentation
+
+* update providers with latest Gemini models ([0fcc9dd](https://github.com/ddnetters/stringly-typed/commit/0fcc9dd075f4d0eaebff6c9d114fe1cdb7fb9a06))
+
 ## [1.4.4](https://github.com/ddnetters/stringly-typed/compare/v1.4.3...v1.4.4) (2026-01-31)
 
 ### 📚 Documentation
