@@ -8,7 +8,7 @@ This guide covers how to configure stringly-typed with different LLM providers f
 |----------|-------------|----------------------|
 | [OpenAI](#openai) | `openai:gpt-4o-mini` | `OPENAI_API_KEY` |
 | [OpenRouter](#openrouter) | `openai:<model-id>` | `OPENAI_API_KEY`, `OPENAI_BASE_URL` |
-| [Anthropic](#anthropic) | `anthropic:claude-3-5-haiku-latest` | `ANTHROPIC_API_KEY` |
+| [Anthropic](#anthropic) | `anthropic:claude-4-5-haiku-latest` | `ANTHROPIC_API_KEY` |
 | [Google AI](#google-ai) | `google:gemini-2.0-flash` | `GOOGLE_API_KEY` |
 | [Azure OpenAI](#azure-openai) | `azure:gpt-4o-mini` | `AZURE_OPENAI_API_KEY`, `AZURE_OPENAI_ENDPOINT` |
 | [AWS Bedrock](#aws-bedrock) | `bedrock:anthropic.claude-3-haiku` | AWS credentials |
@@ -110,8 +110,9 @@ jobs:
 
 | Model ID | Provider | Cost |
 |----------|----------|------|
-| `openai:anthropic/claude-3.5-haiku` | Anthropic | $ |
-| `openai:anthropic/claude-3.5-sonnet` | Anthropic | $$ |
+| `openai:anthropic/claude-4.5-haiku` | Anthropic | $ |
+| `openai:anthropic/claude-4.5-sonnet` | Anthropic | $$ |
+| `openai:anthropic/claude-4.5-opus` | Anthropic | $$$ |
 | `openai:google/gemini-2.0-flash-001` | Google | $ |
 | `openai:google/gemini-3-flash-preview` | Google | $ |
 | `openai:meta-llama/llama-3.3-70b-instruct` | Meta | $ |
@@ -151,7 +152,7 @@ jobs:
           checker: brand_style
           checker-options: |
             {
-              "model": "anthropic:claude-3-5-haiku-latest"
+              "model": "anthropic:claude-4-5-haiku-latest"
             }
           style-guide-file: STYLE_GUIDE.md
           decider: noCritical
@@ -164,9 +165,9 @@ jobs:
 
 | Model | Cost | Best For |
 |-------|------|----------|
-| `anthropic:claude-3-5-haiku-latest` | $ | Fast, cost-effective |
-| `anthropic:claude-3-5-sonnet-latest` | $$ | High-quality analysis |
-| `anthropic:claude-3-opus-latest` | $$$ | Most capable |
+| `anthropic:claude-4-5-haiku-latest` | $ | Fast, cost-effective |
+| `anthropic:claude-4-5-sonnet-latest` | $$ | High-quality analysis |
+| `anthropic:claude-4-5-opus-latest` | $$$ | Most capable |
 
 ---
 
