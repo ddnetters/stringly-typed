@@ -35,9 +35,9 @@ jobs:
       - name: Type check
         run: npm run typecheck
       
-      - name: Build action
-        run: npm run build
-      
+      - name: Bundle action
+        run: npm run bundle
+
       - name: Install semantic-release
         run: npm install --save-dev semantic-release @semantic-release/changelog @semantic-release/git conventional-changelog-conventionalcommits
 
@@ -56,18 +56,47 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+      - name: Publish bundled action to releases branch
+        if: steps.semantic.outputs.new_release_published == 'true'
+        run: |
+          VERSION="${{ steps.semantic.outputs.new_release_version }}"
+          MAJOR_VERSION="v$(echo $VERSION | cut -d. -f1)"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Create orphan branch with only release files
+          git checkout --orphan releases/$MAJOR_VERSION-temp
+
+          # Remove everything, then add back only what's needed
+          git rm -rf .
+          git checkout HEAD -- action.yml package.json README.md LICENSE 2>/dev/null || true
+
+          # Add the bundled dist (force add since it's gitignored)
+          git add -f dist/index.js dist/index.js.map
+
+          git commit -m "Release v$VERSION - bundled action"
+
+          # Force push to the release branch
+          git branch -M releases/$MAJOR_VERSION
+          git push -f origin releases/$MAJOR_VERSION
+
+          echo "✅ Published bundled action to releases/$MAJOR_VERSION"
+
       - name: Update major version tag
         if: steps.semantic.outputs.new_release_published == 'true'
         run: |
           VERSION="${{ steps.semantic.outputs.new_release_version }}"
           MAJOR_VERSION="v$(echo $VERSION | cut -d. -f1)"
 
-          echo "🏷️ Updating $MAJOR_VERSION to point to v$VERSION"
+          echo "🏷️ Updating $MAJOR_VERSION to point to releases/$MAJOR_VERSION"
 
+          # Delete existing major version tag
           git tag -d $MAJOR_VERSION 2>/dev/null || true
           git push origin :refs/tags/$MAJOR_VERSION 2>/dev/null || true
 
-          git tag $MAJOR_VERSION v$VERSION
+          # Create new tag pointing to the releases branch
+          git tag $MAJOR_VERSION releases/$MAJOR_VERSION
           git push origin $MAJOR_VERSION
 
-          echo "✅ Updated $MAJOR_VERSION tag to v$VERSION"
+          echo "✅ Updated $MAJOR_VERSION tag to releases/$MAJOR_VERSION"

@@ -33,7 +33,7 @@ jobs:
         run: npm run typecheck
       
       - name: Build action
-        run: npm run build
+        run: npm run bundle
       
       - name: Extract version info
         id: version
@@ -67,7 +67,7 @@ jobs:
       - name: Install and build
         run: |
           npm ci
-          npm run build
+          npm run bundle
       
       - name: 🔦 Test Stringly-Typed on itself
         uses: ./
@@ -107,7 +107,7 @@ jobs:
       - name: Install and build
         run: |
           npm ci
-          npm run build
+          npm run bundle
 
       - name: Publish to release branch
         run: |
@@ -124,11 +124,11 @@ jobs:
           git rm -rf .
           git checkout HEAD -- action.yml package.json README.md LICENSE 2>/dev/null || true
 
-          # Add the built dist folder
-          git add -f dist/
+          # Add only the bundled dist files (not the whole folder)
+          git add -f dist/index.js dist/index.js.map
           git add action.yml package.json README.md LICENSE 2>/dev/null || true
 
-          git commit -m "Release $VERSION"
+          git commit -m "Release $VERSION - bundled action"
 
           # Force push to the release branch
           git branch -M releases/$MAJOR_VERSION
@@ -156,7 +156,7 @@ jobs:
       - name: Install and build
         run: |
           npm ci
-          npm run build
+          npm run bundle
       
       - name: Generate release notes
         id: release-notes
@@ -222,7 +222,7 @@ EOF
         run: npm ci
       
       - name: Build for npm
-        run: npm run build
+        run: npm run bundle
       
       - name: Update package.json for npm
         run: |
@@ -266,21 +266,24 @@ EOF
         run: |
           VERSION="${{ needs.validate-release.outputs.version }}"
           MAJOR_VERSION=$(echo $VERSION | cut -d. -f1)
-          
-          echo "🏷️ Updating $MAJOR_VERSION to point to $VERSION"
-          
+
+          echo "🏷️ Updating $MAJOR_VERSION to point to releases/$MAJOR_VERSION"
+
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          
+
+          # Fetch the releases branch
+          git fetch origin releases/$MAJOR_VERSION
+
           # Delete existing major version tag (locally and remotely)
           git tag -d $MAJOR_VERSION 2>/dev/null || true
           git push origin :refs/tags/$MAJOR_VERSION 2>/dev/null || true
-          
-          # Create new major version tag
-          git tag $MAJOR_VERSION $VERSION
+
+          # Create new major version tag pointing to releases branch
+          git tag $MAJOR_VERSION origin/releases/$MAJOR_VERSION
           git push origin $MAJOR_VERSION
-          
-          echo "✅ Updated $MAJOR_VERSION tag to $VERSION"
+
+          echo "✅ Updated $MAJOR_VERSION tag to releases/$MAJOR_VERSION"
 
   post-release:
     name: 📢 Post-Release Tasks
