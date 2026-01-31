@@ -195,14 +195,14 @@ export default function Quickstart() {
         <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4 text-sm text-[var(--chocolate-brown)]">
           <div className="flex items-center gap-2">
             <span className="w-6 h-6 rounded-full bg-[var(--burnt-sienna)] text-white flex items-center justify-center text-xs font-bold">1</span>
-            <span>Add STYLE_GUIDE.md to your repo</span>
+            <span>Add <code className="bg-[var(--chocolate-brown)] text-[var(--warm-cream)] px-1.5 py-0.5 rounded text-xs font-mono">STYLE_GUIDE.md</code> to your repo</span>
           </div>
           <svg className="w-4 h-4 hidden sm:block opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
           </svg>
           <div className="flex items-center gap-2">
             <span className="w-6 h-6 rounded-full bg-[var(--burnt-sienna)] text-white flex items-center justify-center text-xs font-bold">2</span>
-            <span>Add workflow to .github/workflows/</span>
+            <span>Add workflow to <code className="bg-[var(--chocolate-brown)] text-[var(--warm-cream)] px-1.5 py-0.5 rounded text-xs font-mono">.github/workflows/</code></span>
           </div>
           <svg className="w-4 h-4 hidden sm:block opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
