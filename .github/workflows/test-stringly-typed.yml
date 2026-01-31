@@ -36,9 +36,11 @@ jobs:
           
       - name: Show Stringly-Typed Results
         run: |
-          echo "Results: ${{ steps.stringly-typed.outputs.results }}"
-          echo "Summary: ${{ steps.stringly-typed.outputs.summary }}"
           echo "Pass: ${{ steps.stringly-typed.outputs.pass }}"
+          echo "Summary:"
+          echo '${{ steps.stringly-typed.outputs.summary }}' | jq .
+          echo "Results:"
+          echo '${{ steps.stringly-typed.outputs.results }}' | jq .
           
       - name: List files being processed
         run: |
