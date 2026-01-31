@@ -2,9 +2,9 @@ import { BrandStyleChecker } from '../brand-style-checker';
 import { isAsyncChecker } from '../base-checker';
 import { BrandStyleOptions } from '../../types';
 
-// Mock the langchain modules
-jest.mock('langchain/chat_models/universal', () => ({
-  initChatModel: jest.fn(),
+// Mock the createChatModel factory
+jest.mock('../create-chat-model', () => ({
+  createChatModel: jest.fn(),
 }));
 
 jest.mock('@langchain/core/messages', () => ({
@@ -12,9 +12,9 @@ jest.mock('@langchain/core/messages', () => ({
   SystemMessage: jest.fn().mockImplementation((content) => ({ content, role: 'system' })),
 }));
 
-import { initChatModel } from 'langchain/chat_models/universal';
+import { createChatModel } from '../create-chat-model';
 
-const mockInitChatModel = initChatModel as jest.MockedFunction<typeof initChatModel>;
+const mockCreateChatModel = createChatModel as jest.MockedFunction<typeof createChatModel>;
 
 describe('BrandStyleChecker', () => {
   let checker: BrandStyleChecker;
@@ -53,7 +53,7 @@ describe('BrandStyleChecker', () => {
       const mockModel = {
         invoke: jest.fn(),
       };
-      mockInitChatModel.mockResolvedValue(mockModel as any);
+      mockCreateChatModel.mockReturnValue(mockModel as any);
     });
 
     it('should return valid when no violations found', async () => {
@@ -65,7 +65,7 @@ describe('BrandStyleChecker', () => {
           }),
         }),
       };
-      mockInitChatModel.mockResolvedValue(mockModel as any);
+      mockCreateChatModel.mockReturnValue(mockModel as any);
 
       const result = await checker.check('The customer completed the purchase.', {
         styleGuide,
@@ -94,7 +94,7 @@ describe('BrandStyleChecker', () => {
           }),
         }),
       };
-      mockInitChatModel.mockResolvedValue(mockModel as any);
+      mockCreateChatModel.mockReturnValue(mockModel as any);
 
       const result = await checker.check('The user completed the purchase.', {
         styleGuide,
@@ -125,7 +125,7 @@ describe('BrandStyleChecker', () => {
           }),
         }),
       };
-      mockInitChatModel.mockResolvedValue(mockModel as any);
+      mockCreateChatModel.mockReturnValue(mockModel as any);
 
       const result = await checker.check('The customer completed the purchase.', {
         styleGuide,
@@ -153,7 +153,7 @@ describe('BrandStyleChecker', () => {
           }),
         }),
       };
-      mockInitChatModel.mockResolvedValue(mockModel as any);
+      mockCreateChatModel.mockReturnValue(mockModel as any);
 
       const result = await checker.check('The customer completed the purchase.', {
         styleGuide,
@@ -174,12 +174,11 @@ describe('BrandStyleChecker', () => {
           content: JSON.stringify({ violations: [], confidence: 1.0 }),
         }),
       };
-      mockInitChatModel.mockResolvedValue(mockModel as any);
+      mockCreateChatModel.mockReturnValue(mockModel as any);
 
       await checker.check('test', { styleGuide });
 
-      expect(mockInitChatModel).toHaveBeenCalledWith('gpt-4o-mini', {
-        modelProvider: 'openai',
+      expect(mockCreateChatModel).toHaveBeenCalledWith('openai', 'gpt-4o-mini', {
         temperature: 0,
       });
     });
@@ -190,15 +189,14 @@ describe('BrandStyleChecker', () => {
           content: JSON.stringify({ violations: [], confidence: 1.0 }),
         }),
       };
-      mockInitChatModel.mockResolvedValue(mockModel as any);
+      mockCreateChatModel.mockReturnValue(mockModel as any);
 
       await checker.check('test', {
         styleGuide,
         model: 'anthropic:claude-sonnet-4-5-20250929',
       });
 
-      expect(mockInitChatModel).toHaveBeenCalledWith('claude-sonnet-4-5-20250929', {
-        modelProvider: 'anthropic',
+      expect(mockCreateChatModel).toHaveBeenCalledWith('anthropic', 'claude-sonnet-4-5-20250929', {
         temperature: 0,
       });
     });
@@ -209,15 +207,14 @@ describe('BrandStyleChecker', () => {
           content: JSON.stringify({ violations: [], confidence: 1.0 }),
         }),
       };
-      mockInitChatModel.mockResolvedValue(mockModel as any);
+      mockCreateChatModel.mockReturnValue(mockModel as any);
 
       await checker.check('test', {
         styleGuide,
         temperature: 0.5,
       });
 
-      expect(mockInitChatModel).toHaveBeenCalledWith('gpt-4o-mini', {
-        modelProvider: 'openai',
+      expect(mockCreateChatModel).toHaveBeenCalledWith('openai', 'gpt-4o-mini', {
         temperature: 0.5,
       });
     });
@@ -232,7 +229,7 @@ describe('BrandStyleChecker', () => {
           content: JSON.stringify({ violations: [], confidence: 1.0 }),
         }),
       };
-      mockInitChatModel.mockResolvedValue(mockModel as any);
+      mockCreateChatModel.mockReturnValue(mockModel as any);
 
       await checker.check('test content', { styleGuide });
       await checker.check('test content', { styleGuide });
@@ -247,7 +244,7 @@ describe('BrandStyleChecker', () => {
           content: JSON.stringify({ violations: [], confidence: 1.0 }),
         }),
       };
-      mockInitChatModel.mockResolvedValue(mockModel as any);
+      mockCreateChatModel.mockReturnValue(mockModel as any);
 
       await checker.check('test content', { styleGuide, enableCache: false });
       await checker.check('test content', { styleGuide, enableCache: false });
@@ -261,7 +258,7 @@ describe('BrandStyleChecker', () => {
           content: JSON.stringify({ violations: [], confidence: 1.0 }),
         }),
       };
-      mockInitChatModel.mockResolvedValue(mockModel as any);
+      mockCreateChatModel.mockReturnValue(mockModel as any);
 
       await checker.check('content A', { styleGuide });
       await checker.check('content B', { styleGuide });
@@ -275,7 +272,7 @@ describe('BrandStyleChecker', () => {
           content: JSON.stringify({ violations: [], confidence: 1.0 }),
         }),
       };
-      mockInitChatModel.mockResolvedValue(mockModel as any);
+      mockCreateChatModel.mockReturnValue(mockModel as any);
 
       await checker.check('test content', { styleGuide });
       checker.clearCache();
@@ -289,7 +286,10 @@ describe('BrandStyleChecker', () => {
     const styleGuide = 'Test style guide';
 
     it('should handle authentication errors', async () => {
-      mockInitChatModel.mockRejectedValue(new Error('401 Unauthorized'));
+      const mockModel = {
+        invoke: jest.fn().mockRejectedValue(new Error('401 Unauthorized')),
+      };
+      mockCreateChatModel.mockReturnValue(mockModel as any);
 
       const result = await checker.check('test', { styleGuide });
 
@@ -298,7 +298,10 @@ describe('BrandStyleChecker', () => {
     });
 
     it('should handle rate limit errors', async () => {
-      mockInitChatModel.mockRejectedValue(new Error('429 rate limit exceeded'));
+      const mockModel = {
+        invoke: jest.fn().mockRejectedValue(new Error('429 rate limit exceeded')),
+      };
+      mockCreateChatModel.mockReturnValue(mockModel as any);
 
       const result = await checker.check('test', { styleGuide });
 
@@ -307,7 +310,10 @@ describe('BrandStyleChecker', () => {
     });
 
     it('should handle timeout errors', async () => {
-      mockInitChatModel.mockRejectedValue(new Error('timeout'));
+      const mockModel = {
+        invoke: jest.fn().mockRejectedValue(new Error('timeout')),
+      };
+      mockCreateChatModel.mockReturnValue(mockModel as any);
 
       const result = await checker.check('test', { styleGuide });
 
@@ -321,7 +327,7 @@ describe('BrandStyleChecker', () => {
           content: 'This is not JSON',
         }),
       };
-      mockInitChatModel.mockResolvedValue(mockModel as any);
+      mockCreateChatModel.mockReturnValue(mockModel as any);
 
       const result = await checker.check('test', { styleGuide });
 
@@ -335,7 +341,7 @@ describe('BrandStyleChecker', () => {
           content: '```json\n{"violations": [], "confidence": 1.0}\n```',
         }),
       };
-      mockInitChatModel.mockResolvedValue(mockModel as any);
+      mockCreateChatModel.mockReturnValue(mockModel as any);
 
       const result = await checker.check('test', { styleGuide });
 
@@ -343,7 +349,10 @@ describe('BrandStyleChecker', () => {
     });
 
     it('should handle unknown errors', async () => {
-      mockInitChatModel.mockRejectedValue('string error');
+      const mockModel = {
+        invoke: jest.fn().mockRejectedValue('string error'),
+      };
+      mockCreateChatModel.mockReturnValue(mockModel as any);
 
       const result = await checker.check('test', { styleGuide });
 
@@ -359,7 +368,7 @@ describe('BrandStyleChecker', () => {
           content: JSON.stringify({ violations: [], confidence: 1.0 }),
         }),
       };
-      mockInitChatModel.mockResolvedValue(mockModel as any);
+      mockCreateChatModel.mockReturnValue(mockModel as any);
 
       await checker.check('test', {
         styleGuide: {

@@ -1,9 +1,9 @@
 import { validateCodebaseStrings, validateCodebaseStringsAsync } from '../validator';
 import { ValidatorInput } from '../types';
 
-// Mock the langchain modules for async validator tests
-jest.mock('langchain/chat_models/universal', () => ({
-  initChatModel: jest.fn(),
+// Mock the createChatModel factory for async validator tests
+jest.mock('../checkers/create-chat-model', () => ({
+  createChatModel: jest.fn(),
 }));
 
 jest.mock('@langchain/core/messages', () => ({
@@ -11,8 +11,8 @@ jest.mock('@langchain/core/messages', () => ({
   SystemMessage: jest.fn().mockImplementation((content) => ({ content, role: 'system' })),
 }));
 
-import { initChatModel } from 'langchain/chat_models/universal';
-const mockInitChatModel = initChatModel as jest.MockedFunction<typeof initChatModel>;
+import { createChatModel } from '../checkers/create-chat-model';
+const mockCreateChatModel = createChatModel as jest.MockedFunction<typeof createChatModel>;
 
 describe('validateCodebaseStrings', () => {
   it('should validate using char_count checker and threshold decider', () => {
@@ -225,7 +225,7 @@ describe('validateCodebaseStringsAsync', () => {
         }),
       }),
     };
-    mockInitChatModel.mockResolvedValue(mockModel as any);
+    mockCreateChatModel.mockReturnValue(mockModel as any);
 
     const input: ValidatorInput = {
       files: [
@@ -262,7 +262,7 @@ describe('validateCodebaseStringsAsync', () => {
         }),
       }),
     };
-    mockInitChatModel.mockResolvedValue(mockModel as any);
+    mockCreateChatModel.mockReturnValue(mockModel as any);
 
     const input: ValidatorInput = {
       files: [
@@ -288,7 +288,7 @@ describe('validateCodebaseStringsAsync', () => {
         content: JSON.stringify({ violations: [], confidence: 1.0 }),
       }),
     };
-    mockInitChatModel.mockResolvedValue(mockModel as any);
+    mockCreateChatModel.mockReturnValue(mockModel as any);
 
     // Create a file with multiple strings
     const strings = Array.from({ length: 15 }, (_, i) => `"String ${i}"`).join(', ');

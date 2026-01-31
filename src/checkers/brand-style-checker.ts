@@ -1,5 +1,5 @@
-import { initChatModel } from 'langchain/chat_models/universal';
 import { HumanMessage, SystemMessage } from '@langchain/core/messages';
+import { createChatModel } from './create-chat-model';
 import { AsyncChecker, IS_ASYNC_CHECKER } from './base-checker';
 import {
   CheckResult,
@@ -56,8 +56,7 @@ export class BrandStyleChecker implements AsyncChecker {
     const modelString = options.model ?? DEFAULT_MODEL;
     const [provider, modelName] = this.parseModelString(modelString);
 
-    const model = await initChatModel(modelName, {
-      modelProvider: provider,
+    const model = createChatModel(provider, modelName, {
       temperature: options.temperature ?? DEFAULT_TEMPERATURE,
     });
 
