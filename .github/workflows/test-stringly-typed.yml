@@ -1,4 +1,4 @@
-name: Test Stringly-Typed
+name: 🧪 Test Stringly-Typed
 on: 
   push:
     branches: [ main ]
