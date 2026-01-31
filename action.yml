@@ -1,0 +1,45 @@
+name: '🎯 Stringly-Typed'
+description: 'AI-powered brand voice validation for your codebase - String validation for quality gates'
+author: 'Stringly-Typed Team'
+inputs:
+  files:
+    description: 'Glob pattern for files to validate'
+    required: true
+    default: '**/*.{js,ts,md,json}'
+  checker:
+    description: 'Checker type to use (char_count, custom, brand_style)'
+    required: true
+    default: 'char_count'
+  checker-options:
+    description: 'JSON string with checker options'
+    required: false
+    default: '{}'
+  style-guide-file:
+    description: 'Path to style guide file for brand_style checker (e.g., STYLE_GUIDE.md)'
+    required: false
+    default: ''
+  decider:
+    description: 'Decider type to use (threshold, noCritical, custom)'
+    required: true
+    default: 'threshold'
+  decider-options:
+    description: 'JSON string with decider options'
+    required: false
+    default: '{}'
+  comment:
+    description: 'PR comment behavior: on-failure, always, or never. Requires GITHUB_TOKEN env var.'
+    required: false
+    default: 'on-failure'
+outputs:
+  results:
+    description: 'JSON string with validation results'
+  summary:
+    description: 'JSON string with validation summary'
+  pass:
+    description: 'Boolean indicating if validation passed'
+runs:
+  using: 'node20'
+  main: 'dist/index.js'
+branding:
+  icon: 'search'
+  color: 'blue'
