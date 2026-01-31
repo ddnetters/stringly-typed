@@ -11,6 +11,12 @@ Releases are automatically created when PRs with conventional commit titles are 
 - `BREAKING CHANGE` or `!` → Major version bump
 
 
+## [1.4.6](https://github.com/ddnetters/stringly-typed/compare/v1.4.5...v1.4.6) (2026-01-31)
+
+### 📚 Documentation
+
+* update Anthropic models to Claude 4.5 (Haiku, Sonnet, Opus) ([c18954e](https://github.com/ddnetters/stringly-typed/commit/c18954e2bcb35a5c120d46fe43fe32eb2a7cd815))
+
 ## [1.4.5](https://github.com/ddnetters/stringly-typed/compare/v1.4.4...v1.4.5) (2026-01-31)
 
 ### 📚 Documentation
