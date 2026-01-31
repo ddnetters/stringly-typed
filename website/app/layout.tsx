@@ -23,6 +23,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://stringly-typed.netters.dev"),
   title: "Stringly-Typed | AI-Powered Brand Voice Validation",
   description:
     "A GitHub Action that validates your UI strings against your brand voice using AI. Catch tone violations before they ship.",
@@ -70,6 +71,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        {/* Preconnect to Google Fonts for faster font loading */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* Preload hero image for better LCP */}
+        <link
+          rel="preload"
+          href="/images/stringly-typed-logo-v2-b.webp"
+          as="image"
+          type="image/webp"
+        />
+        {/* DNS prefetch for external resources */}
+        <link rel="dns-prefetch" href="https://eu.i.posthog.com" />
+      </head>
       <body
         className={`${righteous.variable} ${sourceSerif.variable} ${jetbrainsMono.variable} antialiased`}
       >
