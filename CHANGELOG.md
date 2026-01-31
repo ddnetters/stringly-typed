@@ -11,6 +11,12 @@ Releases are automatically created when PRs with conventional commit titles are 
 - `BREAKING CHANGE` or `!` → Major version bump
 
 
+## [1.4.12](https://github.com/ddnetters/stringly-typed/compare/v1.4.11...v1.4.12) (2026-01-31)
+
+### 👷 CI/CD
+
+* allow manual trigger for Deploy Website workflow ([2192911](https://github.com/ddnetters/stringly-typed/commit/2192911b396667bd64b73287464edb42ef351038))
+
 ## [1.4.11](https://github.com/ddnetters/stringly-typed/compare/v1.4.10...v1.4.11) (2026-01-31)
 
 ### 🐛 Bug Fixes

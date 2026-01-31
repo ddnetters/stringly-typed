@@ -1,6 +1,6 @@
 {
   "name": "stringly-typed",
-  "version": "1.4.11",
+  "version": "1.4.12",
   "author": "ddnetters",
   "description": "🎯 Stringly-Typed - AI-powered brand voice validation for your codebase. GitHub Action for string validation with precision.",
   "main": "dist/index.js",
