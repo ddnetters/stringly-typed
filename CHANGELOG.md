@@ -11,6 +11,29 @@ Releases are automatically created when PRs with conventional commit titles are 
 - `BREAKING CHANGE` or `!` → Major version bump
 
 
+## [1.4.0](https://github.com/ddnetters/stringly-typed/compare/v1.3.0...v1.4.0) (2026-01-31)
+
+### ✨ Features
+
+* **website:** improve code block syntax highlighting ([4dff496](https://github.com/ddnetters/stringly-typed/commit/4dff49689d728a604ec8b7a023258ab86e29042c))
+
+### 🐛 Bug Fixes
+
+* bundle action with esbuild for proper dependency inclusion ([fe866de](https://github.com/ddnetters/stringly-typed/commit/fe866debbd4a0ceeb2a6d754343aba8e82710dfb))
+* **website:** make doc icons visible by default ([ba18e2d](https://github.com/ddnetters/stringly-typed/commit/ba18e2d3adf7da0ac42c66f0e319f7ec35f5b217))
+
+### 📚 Documentation
+
+* add comprehensive LLM providers guide with quickstart examples ([125110c](https://github.com/ddnetters/stringly-typed/commit/125110cc4baa43fab3b013bb302f6805c89d7d40))
+
+### 🔧 Maintenance
+
+* update package-lock.json with esbuild ([25addd9](https://github.com/ddnetters/stringly-typed/commit/25addd9b0e8e93a8f3ca47d99e70d7277da52e50))
+
+### 👷 CI/CD
+
+* exclude website folder from auto-release triggers [skip ci] ([cde4f33](https://github.com/ddnetters/stringly-typed/commit/cde4f33120d7d80fd35281691a06f0bad78ad516))
+
 ## [1.3.0](https://github.com/ddnetters/stringly-typed/compare/v1.2.1...v1.3.0) (2026-01-30)
 
 ### ✨ Features
