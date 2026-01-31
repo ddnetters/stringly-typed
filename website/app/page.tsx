@@ -1,10 +1,19 @@
+import dynamic from "next/dynamic";
 import HeroAnimation from "@/components/HeroAnimation";
 import HowItWorks from "@/components/HowItWorks";
 import Quickstart from "@/components/Quickstart";
 import DocsLinks from "@/components/DocsLinks";
-import FAQ from "@/components/FAQ";
-import WhyWeBuiltThis from "@/components/WhyWeBuiltThis";
-import Footer from "@/components/Footer";
+
+// Lazy load below-the-fold components to reduce initial bundle size
+const FAQ = dynamic(() => import("@/components/FAQ"), {
+  loading: () => <div className="min-h-[400px]" />,
+});
+const WhyWeBuiltThis = dynamic(() => import("@/components/WhyWeBuiltThis"), {
+  loading: () => <div className="min-h-[200px]" />,
+});
+const Footer = dynamic(() => import("@/components/Footer"), {
+  loading: () => <div className="min-h-[100px]" />,
+});
 
 export default function Home() {
   return (
@@ -17,9 +26,14 @@ export default function Home() {
             {/* Logo */}
             <div className="flex justify-center mb-8">
               <img
-                src="/images/stringly-typed-logo-v2-b.png"
+                src="/images/stringly-typed-logo-v2-b.webp"
                 alt="Stringly-Typed"
+                width={469}
+                height={256}
                 className="h-24 md:h-32 w-auto"
+                loading="eager"
+                decoding="async"
+                fetchPriority="high"
               />
             </div>
             <h1
