@@ -40,7 +40,7 @@ export class BrandStyleChecker implements AsyncChecker {
     try {
       const result = await this.performCheck(content, options);
 
-      if (options.enableCache !== false) {
+      if (options.enableCache !== false && result.valid) {
         this.cache.set(cacheKey, result);
       }
 

@@ -280,6 +280,31 @@ describe('BrandStyleChecker', () => {
 
       expect(mockModel.invoke).toHaveBeenCalledTimes(2);
     });
+
+    it('should not cache failed results', async () => {
+      const mockModel = {
+        invoke: jest
+          .fn()
+          .mockResolvedValueOnce({ content: 'This is not valid JSON' })
+          .mockResolvedValueOnce({ content: 'This is not valid JSON' })
+          .mockResolvedValueOnce({ content: 'This is not valid JSON' })
+          .mockResolvedValueOnce({
+            content: JSON.stringify({ violations: [], confidence: 1.0 }),
+          }),
+      };
+      mockCreateChatModel.mockReturnValue(mockModel as any);
+
+      // First call: all 3 retries fail
+      const result1 = await checker.check('test content', { styleGuide });
+      expect(result1.valid).toBe(false);
+
+      // Second call: should retry again (not use cached failure), succeeds
+      const result2 = await checker.check('test content', { styleGuide });
+      expect(result2.valid).toBe(true);
+
+      // 3 attempts for first call + 1 attempt for second call = 4 total
+      expect(mockModel.invoke).toHaveBeenCalledTimes(4);
+    });
   });
 
   describe('error handling', () => {
