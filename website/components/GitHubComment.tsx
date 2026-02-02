@@ -6,6 +6,7 @@ interface Issue {
   line: number;
   content: string;
   issue: string;
+  suggestion: string;
 }
 
 interface FileIssues {
@@ -123,6 +124,9 @@ export default function GitHubComment({ data }: GitHubCommentProps) {
                           <th className="text-left py-2 px-3 text-[#8b949e] font-medium">
                             Issue
                           </th>
+                          <th className="text-left py-2 px-3 text-[#8b949e] font-medium">
+                            Suggestion
+                          </th>
                         </tr>
                       </thead>
                       <tbody>
@@ -141,6 +145,9 @@ export default function GitHubComment({ data }: GitHubCommentProps) {
                             </td>
                             <td className="py-2 px-3 text-[#e6edf3]">
                               {issue.issue}
+                            </td>
+                            <td className="py-2 px-3 text-[#58a6ff]">
+                              {issue.suggestion}
                             </td>
                           </tr>
                         ))}
