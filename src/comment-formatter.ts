@@ -1,8 +1,9 @@
-import { ValidatorOutput, ValidationResult } from './types';
+import { ValidatorOutput, ValidationResult, StyleViolation } from './types';
 
 const MAX_CONTENT_LENGTH = 50;
 const MAX_ISSUES_PER_FILE = 10;
 const MAX_FILES = 10;
+const MAX_SUGGESTION_LENGTH = 100;
 
 function truncate(str: string, maxLength: number): string {
   if (str.length <= maxLength) return str;
@@ -25,6 +26,22 @@ function groupByFile(results: ValidationResult[]): Map<string, ValidationResult[
     grouped.set(result.file, existing);
   }
   return grouped;
+}
+
+function formatSuggestion(details?: StyleViolation[]): string {
+  if (!details || details.length === 0) {
+    return '-';
+  }
+
+  const suggestions = details
+    .filter(d => d.suggestion)
+    .map(d => escapeHtml(truncate(d.suggestion!, MAX_SUGGESTION_LENGTH)));
+
+  if (suggestions.length === 0) {
+    return '-';
+  }
+
+  return suggestions.join('; ');
 }
 
 export function formatPRComment(output: ValidatorOutput): string {
@@ -61,20 +78,21 @@ export function formatPRComment(output: ValidatorOutput): string {
     comment += `<summary><code>${file}</code> (${issueCount} issue${issueCount > 1 ? 's' : ''})</summary>\n\n`;
 
     // Table header
-    comment += `| Line | Content | Issue |\n`;
-    comment += `|------|---------|-------|\n`;
+    comment += `| Line | Content | Issue | Suggestion |\n`;
+    comment += `|------|---------|-------|------------|\n`;
 
     // Table rows
     const displayResults = fileResults.slice(0, MAX_ISSUES_PER_FILE);
     for (const result of displayResults) {
       const content = escapeHtml(truncate(result.content, MAX_CONTENT_LENGTH));
       const message = escapeHtml(result.message);
-      comment += `| ${result.line} | \`${content}\` | ${message} |\n`;
+      const suggestion = formatSuggestion(result.details);
+      comment += `| ${result.line} | \`${content}\` | ${message} | ${suggestion} |\n`;
     }
 
     if (fileResults.length > MAX_ISSUES_PER_FILE) {
       const remaining = fileResults.length - MAX_ISSUES_PER_FILE;
-      comment += `| ... | *${remaining} more* | |\n`;
+      comment += `| ... | *${remaining} more* | | |\n`;
     }
 
     comment += `\n</details>\n\n`;
