@@ -37,6 +37,15 @@ jobs:
           echo "❌ Coverage report not found"
           exit 1
         fi
+
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v4
+      if: matrix.node-version == '20.x'
+      with:
+        files: ./coverage/lcov.info
+        fail_ci_if_error: false
+      env:
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
     
     - name: Type check
       run: npm run typecheck
