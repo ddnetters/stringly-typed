@@ -81,16 +81,27 @@ async function run(): Promise<void> {
       }
     }
 
-    if (result.summary.pass) {
-      core.info(`✅ Validation passed: ${result.summary.reason}`);
-    } else {
-      core.setFailed(`❌ Validation failed: ${result.summary.reason}`);
-    }
-
     if (result.results.length > 0) {
       core.info(`📊 Processed ${result.results.length} strings`);
       const validCount = result.results.filter(r => r.valid).length;
       core.info(`✅ ${validCount} valid, ❌ ${result.results.length - validCount} invalid`);
+    }
+
+    if (result.summary.pass) {
+      core.info(`✅ Validation passed: ${result.summary.reason}`);
+    } else {
+      const failedResults = result.results.filter(r => !r.valid);
+      if (failedResults.length > 0) {
+        core.info('');
+        core.info('Failed strings:');
+        for (const failed of failedResults) {
+          core.info(`  ${failed.file}:${failed.line}`);
+          core.info(`    String: "${failed.content}"`);
+          core.info(`    Reason: ${failed.message}`);
+        }
+        core.info('');
+      }
+      core.setFailed(`❌ Validation failed: ${result.summary.reason}`);
     }
 
   } catch (error) {
