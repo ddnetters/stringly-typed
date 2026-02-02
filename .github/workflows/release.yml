@@ -165,31 +165,29 @@ jobs:
         id: release-notes
         run: |
           VERSION="${{ needs.validate-release.outputs.version }}"
-          
+
           # Extract changelog section for this version or create basic notes
           if grep -q "## \[${VERSION#v}" CHANGELOG.md 2>/dev/null; then
             NOTES=$(sed -n "/## \[${VERSION#v}/,/## \[/p" CHANGELOG.md | head -n -1)
           else
             NOTES="## What's Changed
 
-See the full changelog for details of what's included in this release.
+          See the full changelog for details of what's included in this release.
 
-## 🚀 Quick Start
+          ## Quick Start
 
-\`\`\`yaml
-- uses: ddnetters/stringly-typed@\$VERSION
-  with:
-    files: 'src/**/*.{js,ts,md}'
-    checker: 'char_count'
-    decider: 'threshold'
-\`\`\`"
+          \`\`\`yaml
+          - uses: ddnetters/stringly-typed@\$VERSION
+            with:
+              files: 'src/**/*.{js,ts,md}'
+              checker: 'char_count'
+              decider: 'threshold'
+          \`\`\`"
           fi
-          
+
           # Write to file for upload
-          cat > release-notes.md << 'EOF'
-$NOTES
-EOF
-          
+          echo "$NOTES" > release-notes.md
+
           echo "Generated release notes for $VERSION"
       
       - name: Create GitHub Release
@@ -208,26 +206,41 @@ EOF
     name: 📦 Publish to npm
     needs: [validate-release, test-action]
     runs-on: ubuntu-latest
-    if: ${{ needs.validate-release.outputs.is-prerelease == 'false' && secrets.NPM_TOKEN }}
-    
+    if: ${{ needs.validate-release.outputs.is-prerelease == 'false' }}
+
     steps:
+      - name: Check if NPM_TOKEN is set
+        id: check-token
+        run: |
+          if [ -z "${{ secrets.NPM_TOKEN }}" ]; then
+            echo "skip=true" >> $GITHUB_OUTPUT
+            echo "⚠️ NPM_TOKEN not set, skipping npm publish"
+          else
+            echo "skip=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Checkout code
+        if: steps.check-token.outputs.skip != 'true'
         uses: actions/checkout@v4
-      
+
       - name: Setup Node.js
+        if: steps.check-token.outputs.skip != 'true'
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
           registry-url: 'https://registry.npmjs.org'
-      
+
       - name: Install dependencies
+        if: steps.check-token.outputs.skip != 'true'
         run: npm ci
-      
+
       - name: Build for npm
+        if: steps.check-token.outputs.skip != 'true'
         run: npm run bundle
-      
+
       - name: Update package.json for npm
+        if: steps.check-token.outputs.skip != 'true'
         run: |
           # Update package.json for npm publishing
           node -e "
@@ -246,8 +259,9 @@ EOF
             pkg.homepage = 'https://stringly-typed.netters.dev';
             require('fs').writeFileSync('package.json', JSON.stringify(pkg, null, 2));
           "
-      
+
       - name: Publish to npm
+        if: steps.check-token.outputs.skip != 'true'
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
