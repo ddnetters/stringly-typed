@@ -10,6 +10,7 @@
 [![GitHub release](https://img.shields.io/github/v/release/ddnetters/stringly-typed)](https://github.com/ddnetters/stringly-typed/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Website](https://img.shields.io/badge/Docs-stringly--typed-C45D3E)](https://stringly-typed.netters.dev)
+[![Demo Repo](https://img.shields.io/badge/Demo-stringly--typed--demo-green?logo=github)](https://github.com/ddnetters/stringly-typed-demo)
 
 <!-- TODO: Add demo GIF once ready -->
 <!-- <img src="assets/demo.gif" alt="Demo" width="600"> -->
