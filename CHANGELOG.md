@@ -11,6 +11,12 @@ Releases are automatically created when PRs with conventional commit titles are 
 - `BREAKING CHANGE` or `!` → Major version bump
 
 
+## [1.8.2](https://github.com/ddnetters/stringly-typed/compare/v1.8.1...v1.8.2) (2026-02-05)
+
+### 🔧 Maintenance
+
+* **deps:** bump @isaacs/brace-expansion from 5.0.0 to 5.0.1 ([#38](https://github.com/ddnetters/stringly-typed/issues/38)) ([5a5b92a](https://github.com/ddnetters/stringly-typed/commit/5a5b92a80a759412c24472563ed608bb24a35839))
+
 ## [1.8.1](https://github.com/ddnetters/stringly-typed/compare/v1.8.0...v1.8.1) (2026-02-03)
 
 ### 🐛 Bug Fixes
