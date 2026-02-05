@@ -11,6 +11,14 @@ Releases are automatically created when PRs with conventional commit titles are 
 - `BREAKING CHANGE` or `!` → Major version bump
 
 
+## [1.8.3](https://github.com/ddnetters/stringly-typed/compare/v1.8.2...v1.8.3) (2026-02-05)
+
+### 🔧 Maintenance
+
+* **deps:** bump actions/checkout from 4 to 6 ([#39](https://github.com/ddnetters/stringly-typed/issues/39)) ([9f53936](https://github.com/ddnetters/stringly-typed/commit/9f53936068a0adb075bb45928cd67e10ec0967a0))
+* **deps:** bump amannn/action-semantic-pull-request from 5 to 6 ([#41](https://github.com/ddnetters/stringly-typed/issues/41)) ([ca17620](https://github.com/ddnetters/stringly-typed/commit/ca17620b8a062b4157ac43ecc3a7de188e29b95d))
+* **deps:** bump codecov/codecov-action from 4 to 5 ([#40](https://github.com/ddnetters/stringly-typed/issues/40)) ([59ddff4](https://github.com/ddnetters/stringly-typed/commit/59ddff46f99fd51e64f99225b260e6c619dcb241))
+
 ## [1.8.2](https://github.com/ddnetters/stringly-typed/compare/v1.8.1...v1.8.2) (2026-02-05)
 
 ### 🔧 Maintenance
