@@ -191,7 +191,7 @@ jobs:
           echo "Generated release notes for $VERSION"
       
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ needs.validate-release.outputs.version }}
           name: 🎯 Stringly-Typed ${{ needs.validate-release.outputs.version }}
