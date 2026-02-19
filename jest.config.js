@@ -4,8 +4,11 @@ module.exports = {
   roots: ['<rootDir>/src'],
   testMatch: ['**/__tests__/**/*.test.ts', '**/?(*.)+(spec|test).ts'],
   transform: {
-    '^.+\\.ts$': 'ts-jest',
+    '^.+\\.m?[jt]sx?$': ['ts-jest', { useESM: false }],
   },
+  transformIgnorePatterns: [
+    'node_modules/(?!(@langchain|langchain|ansi-styles)/)',
+  ],
   moduleNameMapper: {
     '^@actions/github$': '<rootDir>/src/__mocks__/@actions/github.ts',
     '^@actions/core$': '<rootDir>/src/__mocks__/@actions/core.ts',
