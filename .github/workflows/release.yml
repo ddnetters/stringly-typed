@@ -310,7 +310,7 @@ jobs:
     
     steps:
       - name: Create release discussion
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const version = "${{ needs.validate-release.outputs.version }}";
