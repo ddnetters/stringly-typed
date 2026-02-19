@@ -17,7 +17,7 @@
     "prerelease": "npm run test && npm run typecheck && npm run bundle"
   },
   "devDependencies": {
-    "@eslint/js": "^9.39.2",
+    "@eslint/js": "^10.0.1",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
     "@types/glob": "^9.0.0",
