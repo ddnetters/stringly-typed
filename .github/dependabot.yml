@@ -8,6 +8,10 @@ updates:
     commit-message:
       prefix: "chore(deps)"
     groups:
+      langchain:
+        patterns:
+          - "langchain"
+          - "@langchain/*"
       dev-dependencies:
         patterns:
           - "@types/*"
