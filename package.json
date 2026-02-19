@@ -41,7 +41,7 @@
     "@langchain/aws": "^1.2.2",
     "@langchain/core": "^1.1.20",
     "@langchain/google-genai": "^2.1.16",
-    "@langchain/openai": "^1.2.6",
+    "@langchain/openai": "^1.2.8",
     "glob": "^13.0.2",
     "langchain": "^1.2.19",
     "zod": "^4.3.6"
