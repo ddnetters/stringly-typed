@@ -27,10 +27,10 @@
     "@typescript-eslint/parser": "^8.59.0",
     "conventional-changelog-conventionalcommits": "^10.2.0",
     "esbuild": "^0.28.1",
-    "eslint": "^10.3.0",
+    "eslint": "^10.6.0",
     "jest": "^30.4.2",
     "semantic-release": "^25.0.5",
-    "ts-jest": "^29.4.9",
+    "ts-jest": "^29.4.11",
     "typescript": "^5.0.0",
     "typescript-eslint": "^8.62.1"
   },
