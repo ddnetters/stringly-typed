@@ -39,7 +39,7 @@
     "@actions/github": "^9.1.1",
     "@langchain/anthropic": "^1.5.10",
     "@langchain/aws": "^1.4.5",
-    "@langchain/core": "^1.2.4",
+    "@langchain/core": "^1.2.12",
     "@langchain/google-genai": "^2.3.2",
     "@langchain/openai": "^1.5.13",
     "glob": "^13.0.6",
