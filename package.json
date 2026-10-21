@@ -38,12 +38,12 @@
     "@actions/core": "^3.0.1",
     "@actions/github": "^9.1.1",
     "@langchain/anthropic": "^1.5.12",
-    "@langchain/aws": "^1.4.6",
+    "@langchain/aws": "^1.4.7",
     "@langchain/core": "^1.2.17",
     "@langchain/google-genai": "^2.3.2",
     "@langchain/openai": "^1.6.2",
     "glob": "^13.0.6",
-    "langchain": "^1.5.16",
+    "langchain": "^1.5.18",
     "zod": "^4.6.6"
   }
 }
